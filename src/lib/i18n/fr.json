@@ -1,0 +1,44 @@
+{
+  "title": "Open Sans ou Roboto ?",
+  "subtitle": "Alors, lequel est-ce ?",
+  "view_leaderboard": "Voir le classement →",
+  "difficulty": {
+    "easy": "Facile",
+    "medium": "Moyen",
+    "hard": "Difficile",
+    "diabolical": "Diabolique"
+  },
+  "meta": "{count} questions · {choices} choix",
+  "countdown": {
+    "label": "{difficulty}",
+    "sub": "Préparez-vous…",
+    "not_ready": "Je ne suis pas prêt"
+  },
+  "game": {
+    "back_to_menu": "Retour au menu"
+  },
+  "result": {
+    "perfect": "Parfait !",
+    "sorry": "Dommage, vous n'êtes pas dans le classement.",
+    "enter_name": "Entrez votre nom pour le classement",
+    "name_placeholder": "Votre nom",
+    "save": "Enregistrer",
+    "saving": "…",
+    "saved": "Score enregistré ✓",
+    "save_error": "Impossible d'enregistrer. Réessayez.",
+    "try_again": "Réessayer",
+    "leaderboard": "Classement",
+    "change_difficulty": "Changer de difficulté"
+  },
+  "leaderboard": {
+    "title": "Classement",
+    "back": "← Retour",
+    "loading": "Chargement…",
+    "empty": "Pas encore de score parfait. Soyez le premier !",
+    "error": "Échec du chargement du classement."
+  },
+  "theme": {
+    "dark": "Mode sombre",
+    "light": "Mode clair"
+  }
+}

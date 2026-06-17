@@ -1,0 +1,44 @@
+{
+  "title": "Open Sans 还是 Roboto？",
+  "subtitle": "你能认出是哪个字体吗？",
+  "view_leaderboard": "查看排行榜 →",
+  "difficulty": {
+    "easy": "简单",
+    "medium": "中等",
+    "hard": "困难",
+    "diabolical": "地狱"
+  },
+  "meta": "{count}题 · {choices}个选项",
+  "countdown": {
+    "label": "{difficulty}",
+    "sub": "准备好了吗…",
+    "not_ready": "我还没准备好"
+  },
+  "game": {
+    "back_to_menu": "返回菜单"
+  },
+  "result": {
+    "perfect": "完美！",
+    "sorry": "很遗憾，你没能上榜。",
+    "enter_name": "输入你的名字登上排行榜",
+    "name_placeholder": "你的名字",
+    "save": "保存",
+    "saving": "…",
+    "saved": "已保存 ✓",
+    "save_error": "保存失败，请重试。",
+    "try_again": "再试一次",
+    "leaderboard": "排行榜",
+    "change_difficulty": "更换难度"
+  },
+  "leaderboard": {
+    "title": "排行榜",
+    "back": "← 返回",
+    "loading": "加载中…",
+    "empty": "还没有完美成绩，成为第一个吧！",
+    "error": "排行榜加载失败。"
+  },
+  "theme": {
+    "dark": "深色模式",
+    "light": "浅色模式"
+  }
+}

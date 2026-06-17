@@ -1,0 +1,44 @@
+{
+  "title": "Open Sans か Roboto か？",
+  "subtitle": "さあ、どっちでしょう？",
+  "view_leaderboard": "ランキングを見る →",
+  "difficulty": {
+    "easy": "かんたん",
+    "medium": "ふつう",
+    "hard": "むずかしい",
+    "diabolical": "地獄"
+  },
+  "meta": "{count}問・{choices}択",
+  "countdown": {
+    "label": "{difficulty}",
+    "sub": "準備して…",
+    "not_ready": "まだ準備できていません"
+  },
+  "game": {
+    "back_to_menu": "メニューに戻る"
+  },
+  "result": {
+    "perfect": "パーフェクト！",
+    "sorry": "残念、リスト入りならず。",
+    "enter_name": "ランキングに名前を入力してください",
+    "name_placeholder": "お名前",
+    "save": "保存",
+    "saving": "…",
+    "saved": "保存しました ✓",
+    "save_error": "保存できませんでした。もう一度試してください。",
+    "try_again": "もう一度",
+    "leaderboard": "ランキング",
+    "change_difficulty": "難易度を変える"
+  },
+  "leaderboard": {
+    "title": "ランキング",
+    "back": "← 戻る",
+    "loading": "読み込み中…",
+    "empty": "まだ完璧なスコアはありません。最初の挑戦者になろう！",
+    "error": "ランキングの読み込みに失敗しました。"
+  },
+  "theme": {
+    "dark": "ダークモード",
+    "light": "ライトモード"
+  }
+}

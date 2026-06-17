@@ -1,0 +1,44 @@
+{
+  "title": "¿Open Sans o Roboto?",
+  "subtitle": "Entonces, ¿cuál es?",
+  "view_leaderboard": "Ver clasificación →",
+  "difficulty": {
+    "easy": "Fácil",
+    "medium": "Medio",
+    "hard": "Difícil",
+    "diabolical": "Diabólico"
+  },
+  "meta": "{count} preguntas · {choices} opciones",
+  "countdown": {
+    "label": "{difficulty}",
+    "sub": "Prepárate…",
+    "not_ready": "No estoy listo"
+  },
+  "game": {
+    "back_to_menu": "Volver al menú"
+  },
+  "result": {
+    "perfect": "¡Perfecto!",
+    "sorry": "Lo siento, no entraste en la clasificación.",
+    "enter_name": "Ingresa tu nombre para la clasificación",
+    "name_placeholder": "Tu nombre",
+    "save": "Guardar",
+    "saving": "…",
+    "saved": "Puntuación guardada ✓",
+    "save_error": "No se pudo guardar. Inténtalo de nuevo.",
+    "try_again": "Intentar de nuevo",
+    "leaderboard": "Clasificación",
+    "change_difficulty": "Cambiar dificultad"
+  },
+  "leaderboard": {
+    "title": "Clasificación",
+    "back": "← Volver",
+    "loading": "Cargando…",
+    "empty": "Aún no hay puntuaciones perfectas. ¡Sé el primero!",
+    "error": "Error al cargar la clasificación."
+  },
+  "theme": {
+    "dark": "Modo oscuro",
+    "light": "Modo claro"
+  }
+}

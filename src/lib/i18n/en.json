@@ -1,0 +1,57 @@
+{
+  "title": "Open Sans or Roboto?",
+  "subtitle": "So, which one is it?",
+  "view_leaderboard": "Leaderboard",
+  "difficulty": {
+    "easy": "Easy Peasy",
+    "medium": "Medium Rare",
+    "hard": "Hard Knocks",
+    "diabolical": "Diabolical"
+  },
+  "difficulty_short": {
+    "easy": "Easy",
+    "medium": "Medium",
+    "hard": "Hard",
+    "diabolical": "Diabolical"
+  },
+  "meta": "{count} {count, plural, one {question} other {questions}} · choose from {choices}",
+  "countdown": {
+    "label": "{difficulty}",
+    "sub": "Get ready…",
+    "not_ready": "I'm not ready"
+  },
+  "game": {
+    "back_to_menu": "Back to menu"
+  },
+  "result": {
+    "perfect": "Flawless kerning.",
+    "score_20": "Were you even looking at the letters?",
+    "score_40": "Close, but the fonts are not impressed.",
+    "score_60": "Not bad. Not good either. The serifs are judging you.",
+    "score_80": "Almost. You can almost smell the difference.",
+    "sorry": "Your eye needs more training. The fonts can tell.",
+    "enter_name": "Claim your spot on the wall of type",
+    "name_placeholder": "Your name",
+    "email_placeholder": "Email (optional)",
+    "email_hint": "We'll whisper if someone de-capitalizes you",
+    "save": "Engrave it",
+    "saving": "…",
+    "saved": "Immortalised ✓",
+    "save_error": "The type-setter fumbled. Try again.",
+    "try_again": "Run it again",
+    "leaderboard": "Wall of Type",
+    "change_difficulty": "Pick a different poison"
+  },
+  "leaderboard": {
+    "title": "Leaderboard",
+    "back": "← Back",
+    "loading": "Loading…",
+    "empty": "No perfect scores yet. Be the first!",
+    "error": "Failed to load leaderboard."
+  },
+  "theme": {
+    "dark": "Dark mode",
+    "light": "Light mode"
+  }
+}
+
