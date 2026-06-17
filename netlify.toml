@@ -1,10 +1,6 @@
 [build]
-  command = "npm run build && npx wrangler pages deploy .svelte-kit/cloudflare --project-name=opensansorroboto --branch=main --commit-dirty=true"
-  publish = ".svelte-kit/cloudflare"
+  command = "npm run build && npx wrangler pages deploy .svelte-kit/cloudflare --project-name=opensansorroboto --branch=main --commit-dirty=true && mkdir -p _netlify_publish && echo '/* https://opensansorroboto.com/:splat 301!' > _netlify_publish/_redirects"
+  publish = "_netlify_publish"
 
 [build.environment]
   NODE_VERSION = "22"
-
-# Prevent Netlify from serving the build output — Cloudflare Pages is the CDN
-[build.processing]
-  skip_processing = true
