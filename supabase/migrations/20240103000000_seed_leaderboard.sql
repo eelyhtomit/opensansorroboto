@@ -2,9 +2,12 @@
 -- Leaderboard seed data — 50 entries per difficulty
 -- Easy fastest: 7.85s | Medium fastest: 18.34s
 -- Hard fastest: 33.29s | Diabolical fastest: 58.92s
+--
+-- Safe to re-run: only inserts when the leaderboard is empty.
 -- ============================================================
 
-insert into leaderboard (name, time_ms, difficulty) values
+insert into leaderboard (name, time_ms, difficulty)
+select name, time_ms, difficulty from (values
 -- EASY (50 entries, fastest 7850ms)
 ('alex',          7850,  'easy'),
 ('mia',           8120,  'easy'),
@@ -141,4 +144,6 @@ insert into leaderboard (name, time_ms, difficulty) values
 ('pax.type',      149400, 'diabolical'),
 ('dexter',        178900, 'diabolical'),
 ('nia',           214700, 'diabolical'),
-('lev',           257600, 'diabolical');
+('lev',           257600, 'diabolical')
+) AS seed(name, time_ms, difficulty)
+WHERE NOT EXISTS (SELECT 1 FROM leaderboard LIMIT 1);
