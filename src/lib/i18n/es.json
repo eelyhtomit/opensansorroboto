@@ -1,6 +1,6 @@
 {
   "title": "¿Open Sans o Roboto?",
-  "subtitle": "Entonces, ¿cuál es?",
+  "subtitle": "¿Crees que eres mejor que el diseñador promedio?<br>Demuestra que puedes adivinar estas fuentes.",
   "view_leaderboard": "Ver clasificación →",
   "difficulty": {
     "easy": "Fácil",
@@ -8,16 +8,22 @@
     "hard": "Difícil",
     "diabolical": "Diabólico"
   },
-  "meta": "{count} preguntas · {choices} opciones",
+  "meta": {
+    "easy": "10 preguntas - ¿Open Sans o Roboto?",
+    "medium": "10 preguntas - Elige entre 4 fuentes",
+    "hard": "5 preguntas - Elige entre 6 fuentes al azar",
+    "diabolical": "5 preguntas - Elige entre 8 fuentes al azar, con sorpresas"
+  },
   "countdown": {
     "label": "{difficulty}",
     "sub": "Prepárate…",
-    "not_ready": "No estoy listo"
+    "not_ready": ["¡Espera, para!", "¡Un momento!", "Mis ojos aún no están listos…", "¡Todavía no!"]
   },
   "game": {
     "back_to_menu": "Volver al menú"
   },
   "result": {
+    "your_score": "Tu puntuación es",
     "perfect": "¡Perfecto!",
     "sorry": "Lo siento, no entraste en la clasificación.",
     "enter_name": "Ingresa tu nombre para la clasificación",

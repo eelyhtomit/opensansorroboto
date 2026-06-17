@@ -1,6 +1,6 @@
 {
   "title": "Open Sans ou Roboto ?",
-  "subtitle": "Alors, lequel est-ce ?",
+  "subtitle": "Vous pensez être meilleur que le designer moyen ?<br>Voyez si vous pouvez identifier ces polices.",
   "view_leaderboard": "Voir le classement →",
   "difficulty": {
     "easy": "Facile",
@@ -8,16 +8,22 @@
     "hard": "Difficile",
     "diabolical": "Diabolique"
   },
-  "meta": "{count} questions · {choices} choix",
+  "meta": {
+    "easy": "10 questions - Open Sans ou Roboto ?",
+    "medium": "10 questions - Devinez parmi 4 polices",
+    "hard": "5 questions - Devinez parmi 6 polices au hasard",
+    "diabolical": "5 questions - Devinez parmi 8 polices au hasard, avec des surprises"
+  },
   "countdown": {
     "label": "{difficulty}",
     "sub": "Préparez-vous…",
-    "not_ready": "Je ne suis pas prêt"
+    "not_ready": ["Attends, stop !", "Une seconde !", "Mes yeux s'ajustent encore…", "Pas encore !"]
   },
   "game": {
     "back_to_menu": "Retour au menu"
   },
   "result": {
+    "your_score": "Votre score est",
     "perfect": "Parfait !",
     "sorry": "Dommage, vous n'êtes pas dans le classement.",
     "enter_name": "Entrez votre nom pour le classement",

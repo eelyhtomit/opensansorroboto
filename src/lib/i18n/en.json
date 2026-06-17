@@ -1,6 +1,6 @@
 {
   "title": "Open Sans or Roboto?",
-  "subtitle": "So, which one is it?",
+  "subtitle": "Think you are better than the average designer?<br>See if you can guess them fonts correctly.",
   "view_leaderboard": "Leaderboard",
   "difficulty": {
     "easy": "Easy Peasy",
@@ -14,23 +14,29 @@
     "hard": "Hard",
     "diabolical": "Diabolical"
   },
-  "meta": "{count} {count, plural, one {question} other {questions}} · choose from {choices}",
+  "meta": {
+    "easy": "10 questions - Open Sans or Roboto?",
+    "medium": "10 questions - Open Sans, Roboto, Arial, Montserrat",
+    "hard": "5 questions - Guess from 6 fonts at random",
+    "diabolical": "5 questions - Guess from 8 fonts at random, with surprises"
+  },
   "countdown": {
     "label": "{difficulty}",
     "sub": "Get ready…",
-    "not_ready": "I'm not ready"
+    "not_ready": ["Wait, hold up!", "Gimme a sec!", "Eyes still adjusting…", "Not yet, not yet!"]
   },
   "game": {
     "back_to_menu": "Back to menu"
   },
   "result": {
+    "your_score": "Your score is",
     "perfect": "Flawless kerning.",
     "score_20": "Were you even looking at the letters?",
     "score_40": "Close, but the fonts are not impressed.",
     "score_60": "Not bad. Not good either. The serifs are judging you.",
     "score_80": "Almost. You can almost smell the difference.",
     "sorry": "Your eye needs more training. The fonts can tell.",
-    "enter_name": "Claim your spot on the wall of type",
+    "enter_name": "Claim your spot on the Wall of Fame",
     "name_placeholder": "Your name",
     "email_placeholder": "Email (optional)",
     "email_hint": "We'll whisper if someone de-capitalizes you",
@@ -39,8 +45,8 @@
     "saved": "Immortalised ✓",
     "save_error": "The type-setter fumbled. Try again.",
     "try_again": "Run it again",
-    "leaderboard": "Wall of Type",
-    "change_difficulty": "Pick a different poison"
+    "leaderboard": "Wall of Fame",
+    "change_difficulty": "Too easy? Too hard?"
   },
   "leaderboard": {
     "title": "Leaderboard",

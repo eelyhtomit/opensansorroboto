@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { game } from '$lib/stores/gameStore';
+	import { game, score } from '$lib/stores/gameStore';
 	import { theme } from '$lib/stores/themeStore';
 	import { locale, t } from 'svelte-i18n';
 	import DifficultySelector from '$lib/components/DifficultySelector.svelte';
@@ -21,6 +21,21 @@
 
 	function currentLocale(value: string | null | undefined): string {
 		return locales.find((l) => value === l.code || value?.startsWith(l.code))?.code ?? 'en';
+	}
+
+	function quitGame() {
+		// Record the incomplete play before navigating away
+		fetch('/api/track-play', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				difficulty: $game.difficulty,
+				score: $score,
+				time_ms: $game.timerMs,
+				completed: false
+			})
+		}).catch(() => {});
+		game.goTo('difficulty');
 	}
 </script>
 
@@ -60,7 +75,7 @@
 					<Timer />
 					<span class="progress">{$game.currentIndex + 1} / {$game.questions.length}</span>
 				</div>
-				<button class="back-link" onclick={() => game.goTo('difficulty')}>{$t('game.back_to_menu')}</button>
+				<button class="back-link" onclick={quitGame}>{$t('game.back_to_menu')}</button>
 			</div>
 
 		{:else if $game.phase === 'result'}

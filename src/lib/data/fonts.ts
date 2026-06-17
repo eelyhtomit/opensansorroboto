@@ -12,15 +12,22 @@ export const FONTS: FontConfig[] = [
 	{ name: 'Montserrat', family: "'Montserrat', sans-serif" },
 	{ name: 'Poppins', family: "'Poppins', sans-serif" },
 	{ name: 'Inter', family: "'Inter', sans-serif" },
-	{ name: 'Source Sans 3', family: "'Source Sans 3', sans-serif" },
-	{ name: 'Noto Sans', family: "'Noto Sans', sans-serif" }
+	{ name: 'Verdana', family: "Verdana, sans-serif" },
+	{ name: 'Source Sans Pro', family: "'Source Sans Pro', sans-serif" },
+	{ name: 'Arial', family: "Arial, sans-serif" },
+	{ name: 'Helvetica', family: "Helvetica, Arial, sans-serif" }
 ];
 
+// Fonts excluding Open Sans and Roboto (used as random display fonts for medium/hard)
+export const FONTS_RANDOM: FontConfig[] = FONTS.filter(
+	(f) => f.name !== 'Open Sans' && f.name !== 'Roboto'
+);
+
 export const DIFFICULTY_FONTS: Record<Difficulty, FontConfig[]> = {
-	easy: FONTS.slice(0, 2),         // Open Sans, Roboto
-	medium: FONTS.slice(0, 4),       // + Lato, Montserrat
-	hard: FONTS.slice(0, 6),         // + Poppins, Inter
-	diabolical: FONTS.slice(0, 8)    // All 8 — randomised styles + letter spacing
+	easy: FONTS.slice(0, 2),  // Open Sans, Roboto only
+	medium: FONTS.slice(0, 2), // Base: Open Sans + Roboto; 2 random from FONTS_RANDOM added per session in generateQuestions
+	hard: FONTS_RANDOM,        // All non-Open-Sans/Roboto fonts — randomised
+	diabolical: [...FONTS]     // All 10 fonts — randomised styles + letter spacing
 };
 
 export const DIFFICULTY_QUESTION_COUNT: Record<Difficulty, number> = {

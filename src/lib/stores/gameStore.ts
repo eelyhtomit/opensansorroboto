@@ -21,20 +21,24 @@ export interface GameState {
 	phase: GamePhase;
 	difficulty: Difficulty;
 	questions: Question[];
+	fontPool: FontConfig[];
 	currentIndex: number;
 	startTime: number | null;
 	endTime: number | null;
 	timerMs: number;
+	highlightName: string | null;
 }
 
 const initialState: GameState = {
 	phase: 'home',
 	difficulty: 'easy',
 	questions: [],
+	fontPool: [],
 	currentIndex: 0,
 	startTime: null,
 	endTime: null,
-	timerMs: 0
+	timerMs: 0,
+	highlightName: null
 };
 
 function createGameStore() {
@@ -64,15 +68,17 @@ function createGameStore() {
 		},
 
 		// Called after questions are fetched — goes to countdown phase first
-		startGameWithDifficulty(questions: Question[], difficulty: Difficulty) {
+		startGameWithDifficulty(questions: Question[], difficulty: Difficulty, fontPool: FontConfig[]) {
 			set({
 				phase: 'countdown',
 				difficulty,
 				questions,
+				fontPool,
 				currentIndex: 0,
 				startTime: null,
 				endTime: null,
-				timerMs: 0
+				timerMs: 0,
+				highlightName: null
 			});
 		},
 
@@ -118,6 +124,11 @@ function createGameStore() {
 		goTo(phase: GamePhase) {
 			if (phase !== 'playing') stopTimer();
 			update((s) => ({ ...s, phase }));
+		},
+
+		goToLeaderboardHighlighting(name: string) {
+			stopTimer();
+			update((s) => ({ ...s, phase: 'leaderboard', highlightName: name }));
 		},
 
 		reset() {

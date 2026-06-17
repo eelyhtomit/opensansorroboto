@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import { game } from '$lib/stores/gameStore';
 	import { supabase, type LeaderboardEntry } from '$lib/supabase';
 	import { type Difficulty } from '$lib/data/fonts';
@@ -11,14 +11,26 @@
 	let loading = $state(true);
 	let error = $state('');
 
+	// Name to highlight (set when navigating here from ResultScreen after submit)
+	const highlightName = $game.highlightName ?? null;
+
+	const LEADERBOARD_LIMIT: Record<Difficulty, number> = { easy: 50, medium: 50, hard: 20, diabolical: 20 };
+
 	async function fetchLeaderboard(diff: Difficulty) {
 		loading = true; error = '';
 		const { data, error: err } = await supabase
 			.from('leaderboard').select('*').eq('difficulty', diff)
-			.order('time_ms', { ascending: true }).limit(20);
+			.order('time_ms', { ascending: true }).limit(LEADERBOARD_LIMIT[diff]);
 		loading = false;
 		if (err) { error = $t('leaderboard.error'); entries = []; }
-		else { entries = data as LeaderboardEntry[]; }
+		else {
+			entries = data as LeaderboardEntry[];
+			// Scroll highlighted row into view after render
+			if (highlightName) {
+				await tick();
+				document.querySelector('.entry.highlighted')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+			}
+		}
 	}
 
 	function setTab(diff: Difficulty) { activeTab = diff; fetchLeaderboard(diff); }
@@ -29,7 +41,44 @@
 		return `${s}.${cents}s`;
 	}
 
-	onMount(() => fetchLeaderboard(activeTab));
+	function drawKofi() {
+		(window as any).kofiWidgetOverlay?.draw('yhtomit', {
+			'type': 'floating-chat',
+			'floating-chat.donateButton.text': 'Buy me a decaf',
+			'floating-chat.donateButton.background-color': '#ffffff',
+			'floating-chat.donateButton.text-color': '#323842'
+		});
+	}
+
+	function removeKofi() {
+		document.getElementById('kofi-overlay-btn')?.remove();
+		document.querySelector('.kofi-button-container')?.remove();
+		document.querySelectorAll('[id^="kofi"]').forEach((el) => el.remove());
+	}
+
+	onMount(() => {
+		fetchLeaderboard(activeTab);
+
+		// If already loaded (revisiting leaderboard), just re-draw
+		if ((window as any).kofiWidgetOverlay) {
+			drawKofi();
+		} else {
+			const existing = document.querySelector('script[src*="overlay-widget.js"]');
+			if (!existing) {
+				const script = document.createElement('script');
+				script.src = 'https://storage.ko-fi.com/cdn/scripts/overlay-widget.js';
+				script.onload = drawKofi;
+				document.body.appendChild(script);
+			} else {
+				// Script tag exists but may still be loading
+				existing.addEventListener('load', drawKofi);
+			}
+		}
+
+		return () => {
+			removeKofi();
+		};
+	});
 </script>
 
 <div class="leaderboard">
@@ -55,7 +104,7 @@
 	{:else}
 		<ol class="entries">
 			{#each entries as entry, i}
-				<li class="entry">
+				<li class="entry" class:highlighted={highlightName !== null && entry.name === highlightName}>
 					<span class="rank">{i + 1}</span>
 					<span class="entry-name">{entry.name}</span>
 					<span class="entry-time">{formatTime(entry.time_ms)}</span>
@@ -108,6 +157,18 @@
 	.entry:nth-child(1) { border-left: 3px solid var(--fg); }
 	.entry:nth-child(2) { border-left: 3px solid var(--fg-muted); }
 	.entry:nth-child(3) { border-left: 3px solid var(--fg-subtle); }
+
+	.entry.highlighted {
+		background: #fef08a;
+		color: #111;
+	}
+	:global([data-theme="dark"]) .entry.highlighted {
+		background: #854d0e;
+		color: #fef9c3;
+	}
+	.entry.highlighted .entry-name,
+	.entry.highlighted .rank,
+	.entry.highlighted .entry-time { color: inherit; }
 
 	.rank { color: var(--fg-subtle); font-size: 0.75rem; text-align: right; }
 	.entry:nth-child(1) .rank,

@@ -6,6 +6,14 @@
 
 	let count = $state(5);
 
+	// Pick a random phrase once per mount; $t is reactive so use $derived
+	const notReadyLabel = $derived.by(() => {
+		const options = $t('countdown.not_ready');
+		return Array.isArray(options)
+			? options[Math.floor(Math.random() * options.length)]
+			: options;
+	});
+
 	onMount(() => {
 		const interval = setInterval(() => {
 			count -= 1;
@@ -19,7 +27,7 @@
 	<p class="label">{$t(`difficulty_short.${$game.difficulty}`)}</p>
 	<div class="number" class:pulse={count > 0}>{count > 0 ? count : 'Go'}</div>
 	<p class="sub">{$t('countdown.sub')}</p>
-	<button class="not-ready" onclick={() => game.goTo('difficulty')}>{$t('countdown.not_ready')}</button>
+	<button class="not-ready" onclick={() => game.goTo('difficulty')}>{notReadyLabel}</button>
 </div>
 
 <style>

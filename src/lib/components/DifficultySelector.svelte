@@ -20,8 +20,8 @@
 		errorMsg = '';
 		try {
 			game.setDifficulty(difficulty);
-			const questions = await generateQuestions(difficulty);
-			game.startGameWithDifficulty(questions, difficulty);
+			const { questions, fontPool } = await generateQuestions(difficulty);
+			game.startGameWithDifficulty(questions, difficulty, fontPool);
 		} catch (e: unknown) {
 			errorMsg = e instanceof Error ? e.message : 'Failed to start game.';
 		} finally {
@@ -34,13 +34,13 @@
 	<div class="hero" style="font-family: {hero.family}">
 		<h1 class="title">{$t('title')}</h1>
 	</div>
-	<p class="subtitle">{$t('subtitle')}</p>
+	<p class="subtitle">{@html $t('subtitle')}</p>
 
 	<div class="levels">
 		{#each difficulties as diff}
 			<button class="level-btn" disabled={loading} onclick={() => select(diff)}>
 				<span class="level-name">{$t(`difficulty.${diff}`)}</span>
-				<span class="level-meta">{$t('meta', { values: { count: DIFFICULTY_QUESTION_COUNT[diff], choices: DIFFICULTY_FONTS[diff].length } })}</span>
+				<span class="level-meta">{$t(`meta.${diff}`)}</span>
 			</button>
 		{/each}
 	</div>

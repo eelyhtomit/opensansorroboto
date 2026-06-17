@@ -1,6 +1,6 @@
 {
   "title": "Open Sans 还是 Roboto？",
-  "subtitle": "你能认出是哪个字体吗？",
+  "subtitle": "你觉得自己比普通设计师厉害吗？<br>来测试你认出字体的能力吧。",
   "view_leaderboard": "查看排行榜 →",
   "difficulty": {
     "easy": "简单",
@@ -8,16 +8,22 @@
     "hard": "困难",
     "diabolical": "地狱"
   },
-  "meta": "{count}题 · {choices}个选项",
+  "meta": {
+    "easy": "10题 - Open Sans 还是 Roboto？",
+    "medium": "10题 - 从4种字体中猜",
+    "hard": "5题 - 从随机6种字体中猜",
+    "diabolical": "5题 - 从随机8种字体中猜，有惊喜"
+  },
   "countdown": {
     "label": "{difficulty}",
     "sub": "准备好了吗…",
-    "not_ready": "我还没准备好"
+    "not_ready": ["等等，先别！", "给我一秒！", "眼睛还没适应…", "还没好呢！"]
   },
   "game": {
     "back_to_menu": "返回菜单"
   },
   "result": {
+    "your_score": "你的得分是",
     "perfect": "完美！",
     "sorry": "很遗憾，你没能上榜。",
     "enter_name": "输入你的名字登上排行榜",

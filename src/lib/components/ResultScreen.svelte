@@ -2,12 +2,29 @@
 	import { game, isPerfect, score } from '$lib/stores/gameStore';
 	import { generateQuestions } from '$lib/utils/generateQuestions';
 	import { t } from 'svelte-i18n';
+	import { onMount } from 'svelte';
 
-	let name = $state('');
-	let email = $state('');
+	// Pre-fill from previous session
+	let name = $state(localStorage.getItem('osrr_name') ?? '');
+	let email = $state(localStorage.getItem('osrr_email') ?? '');
 	let submitted = $state(false);
 	let submitting = $state(false);
 	let submitError = $state('');
+
+	// Fire-and-forget: record every completed game play
+	onMount(() => {
+		fetch('/api/track-play', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				difficulty: $game.difficulty,
+				score: $score,
+				time_ms: $game.timerMs
+			})
+		}).catch(() => {
+			// non-critical — ignore failures silently
+		});
+	});
 
 	function formatTime(ms: number): string {
 		const s = Math.floor(ms / 1000);
@@ -16,8 +33,8 @@
 	}
 
 	async function tryAgain() {
-		const questions = await generateQuestions($game.difficulty);
-		game.startGameWithDifficulty(questions, $game.difficulty);
+		const { questions, fontPool } = await generateQuestions($game.difficulty);
+		game.startGameWithDifficulty(questions, $game.difficulty, fontPool);
 	}
 
 	async function submitScore() {
@@ -38,7 +55,11 @@
 			});
 
 			if (!res.ok) throw new Error('server error');
-			submitted = true;
+			// Persist for next session autofill
+			localStorage.setItem('osrr_name', name.trim());
+			if (email.trim()) localStorage.setItem('osrr_email', email.trim());
+			// Navigate straight to leaderboard with the name highlighted
+			game.goToLeaderboardHighlighting(name.trim());
 		} catch {
 			submitError = $t('result.save_error');
 		} finally {
@@ -48,6 +69,8 @@
 </script>
 
 <div class="result-screen">
+	<p class="your-score-label">{$t('result.your_score')}</p>
+	<p class="score-label">{$score}/{$game.questions.length}</p>
 	{#if $isPerfect}
 		<p class="perfect-label">{$t('result.perfect')}</p>
 		<p class="time-label">{formatTime($game.timerMs)}</p>
@@ -79,8 +102,6 @@
 				</div>
 				{#if submitError}<p class="error">{submitError}</p>{/if}
 			</div>
-		{:else}
-			<p class="saved-msg">{$t('result.saved')}</p>
 		{/if}
 	{:else}
 		<p class="sorry">
@@ -115,6 +136,8 @@
 		width: 100%;
 	}
 
+	.your-score-label { font-size: 0.8rem; color: var(--fg-muted); margin: 0; letter-spacing: 0.05em; text-transform: uppercase; }
+	.score-label { font-size: 2.5rem; font-weight: 600; margin: 0; color: var(--fg); font-variant-numeric: tabular-nums; }
 	.perfect-label { font-size: 1.5rem; font-weight: 500; margin: 0; color: var(--fg); }
 	.time-label { font-size: 1rem; color: var(--fg-muted); font-variant-numeric: tabular-nums; margin: -1.25rem 0 0; }
 	.sorry { font-size: 1rem; color: var(--fg); margin: 0; }

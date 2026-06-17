@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { game } from '$lib/stores/gameStore';
-	import { DIFFICULTY_FONTS } from '$lib/data/fonts';
 
-	const fonts = $derived(DIFFICULTY_FONTS[$game.difficulty]);
+	// Use the full font pool stored in game state (not just fonts that appeared in questions)
+	const fonts = $derived($game.fontPool);
 	const question = $derived($game.questions[$game.currentIndex]);
 	const answered = $derived(question?.answered ?? false);
 	const correctFont = $derived(question?.font.name);
+	const cols = $derived(2);
 
 	function answer(fontName: string) {
 		if (answered) return;
@@ -20,7 +21,7 @@
 	}
 </script>
 
-<div class="answer-grid" style="--cols: {Math.min(fonts.length, 4)}">
+<div class="answer-grid" style="--cols: {cols}">
 	{#each fonts as font}
 		<button
 			class={btnClass(font.name)}

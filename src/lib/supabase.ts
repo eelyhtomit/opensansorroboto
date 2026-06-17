@@ -19,3 +19,12 @@ export interface LeaderboardEntry {
 	difficulty: string;
 	created_at: string;
 }
+
+export interface GamePlay {
+	id: string;
+	difficulty: string;
+	score: number;
+	time_ms: number;
+	completed: boolean;
+	created_at: string;
+}
