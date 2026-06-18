@@ -5,6 +5,38 @@ import type { Question } from '$lib/stores/gameStore';
 
 type StyleVariant = Pick<Question, 'fontStyle' | 'fontWeight' | 'textTransform' | 'letterSpacing'>;
 
+// ---------------------------------------------------------------------------
+// Phrases cache — kick off the fetch immediately when this module is imported
+// so the data is ready (or nearly ready) by the time the user picks a difficulty.
+// ---------------------------------------------------------------------------
+let phrasesPromise: Promise<string[]> | null = null;
+
+function fetchPhrases(): Promise<string[]> {
+	if (phrasesPromise) return phrasesPromise;
+	phrasesPromise = supabase
+		.from('phrases')
+		.select('text')
+		.order('id')
+		.limit(100)
+		.then(({ data, error }) => {
+			if (error) {
+				// Allow retry on next call
+				phrasesPromise = null;
+				throw new Error(`Failed to fetch phrases: ${error.message}`);
+			}
+			if (!data || data.length === 0) {
+				phrasesPromise = null;
+				throw new Error('Not enough phrases in the database. Please seed the phrases table.');
+			}
+			return data.map((d: { text: string }) => d.text);
+		});
+	return phrasesPromise;
+}
+
+// Warm up immediately on module import (fires in the background, errors are
+// silently swallowed here — generateQuestions will surface them properly).
+fetchPhrases().catch(() => {});
+
 const DIABOLICAL_STYLES: StyleVariant[] = [
 	{ fontStyle: 'normal', fontWeight: 'normal', textTransform: 'none',      letterSpacing: 'normal' },
 	{ fontStyle: 'italic', fontWeight: 'normal', textTransform: 'none',      letterSpacing: 'normal' },
@@ -29,16 +61,11 @@ function randomStyle(difficulty: Difficulty): StyleVariant {
 export async function generateQuestions(difficulty: Difficulty): Promise<{ questions: Question[]; fontPool: FontConfig[] }> {
 	const count = DIFFICULTY_QUESTION_COUNT[difficulty];
 
-	const { data, error } = await supabase
-		.from('phrases')
-		.select('text')
-		.order('id')
-		.limit(100);
+	// Uses the already-in-flight (or resolved) cached promise — no extra round-trip.
+	const allPhrases = await fetchPhrases();
+	if (allPhrases.length < count) throw new Error('Not enough phrases in the database. Please seed the phrases table.');
 
-	if (error) throw new Error(`Failed to fetch phrases: ${error.message}`);
-	if (!data || data.length < count) throw new Error('Not enough phrases in the database. Please seed the phrases table.');
-
-	const phrases = shuffle(data.map((d: { text: string }) => d.text)).slice(0, count);
+	const phrases = shuffle([...allPhrases]).slice(0, count);
 
 	// For medium: Open Sans + Roboto + 2 randomly picked from FONTS_RANDOM (per session)
 	// For hard:   Open Sans + Roboto + 4 randomly picked from FONTS_RANDOM (per session)

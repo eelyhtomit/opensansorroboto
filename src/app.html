@@ -38,9 +38,33 @@
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
 		<link
-			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Lato:wght@400;700&family=Montserrat:wght@400;500&family=Open+Sans:wght@400;500&family=Poppins:wght@400;500&family=Roboto:wght@400;500&family=Source+Sans+Pro:wght@400;600&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Lato:ital,wght@0,400;0,700;1,400&family=Montserrat:ital,wght@0,400;0,500;0,700;1,400&family=Open+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Poppins:ital,wght@0,400;0,500;0,700;1,400&family=Roboto:ital,wght@0,400;0,500;0,700;1,400&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap"
 			rel="stylesheet"
 		/>
+		<!-- Eagerly warm up all game fonts so they are ready before the countdown starts -->
+		<script>
+			(function () {
+				if (!('fonts' in document)) return;
+				var weights = ['400', '500', '700'];
+				var families = [
+					'Open Sans',
+					'Roboto',
+					'Lato',
+					'Montserrat',
+					'Poppins',
+					'Inter',
+					'Source Sans 3'
+				];
+				var phrases = ['Open Sans or Roboto?', 'Aa Bb Cc'];
+				families.forEach(function (family) {
+					weights.forEach(function (weight) {
+						phrases.forEach(function (text) {
+							document.fonts.load(weight + ' 48px "' + family + '"', text);
+						});
+					});
+				});
+			})();
+		</script>
 		<style>
 			:root {
 				--bg: #fff;
