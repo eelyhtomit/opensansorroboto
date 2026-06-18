@@ -25,3 +25,6 @@ vite.config.ts.timestamp-*
 # Supabase local
 supabase/.branches
 supabase/.temp
+
+# Sentry Config File
+.env.sentry-build-plugin

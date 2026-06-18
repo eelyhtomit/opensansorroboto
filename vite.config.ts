@@ -1,9 +1,18 @@
 import adapter from '@sveltejs/adapter-cloudflare';
 import { sveltekit } from '@sveltejs/kit/vite';
+import { sentrySvelteKit } from '@sentry/sveltekit';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
 	plugins: [
+		sentrySvelteKit({
+			sourceMapsUploadOptions: {
+				org: 'digii-u4',
+				project: 'opensansorroboto'
+				// authToken is read from the SENTRY_AUTH_TOKEN env var
+				// (see .env.sentry-build-plugin, which is git-ignored)
+			}
+		}),
 		sveltekit({
 			compilerOptions: {
 				// Force runes mode for the project, except for libraries. Can be removed in svelte 6.

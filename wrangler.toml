@@ -1,0 +1,13 @@
+#:schema node_modules/wrangler/config-schema.json
+# Wrangler configuration for the Cloudflare Pages deployment.
+#
+# The Sentry Cloudflare SDK (used via @sentry/sveltekit's
+# initCloudflareSentryHandle) relies on the Node.js `AsyncLocalStorage` API
+# from `node:async_hooks`. That API is only available on the Workers runtime
+# when the `nodejs_compat` compatibility flag is enabled — without it the
+# worker throws at runtime. See:
+# https://developers.cloudflare.com/workers/runtime-apis/nodejs/
+name = "opensansorroboto"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".svelte-kit/cloudflare"
