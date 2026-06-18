@@ -1,18 +1,24 @@
 {
   "title": "Open Sans ou Roboto?",
-  "subtitle": "Acha que é melhor do que o designer médio?<br>Veja se consegue adivinhar essas fontes corretamente.",
+  "subtitle": "Acha que tem um olho mais apurado que o designer médio?<br>Veja se consegue identificar essas fontes corretamente.",
   "view_leaderboard": "Ver classificação →",
   "difficulty": {
+    "easy": "Fácil",
+    "medium": "Intermediário",
+    "hard": "Difícil",
+    "diabolical": "Diabólico"
+  },
+  "difficulty_short": {
     "easy": "Fácil",
     "medium": "Médio",
     "hard": "Difícil",
     "diabolical": "Diabólico"
   },
   "meta": {
-    "easy": "10 perguntas - Open Sans ou Roboto?",
-    "medium": "10 perguntas - Adivinhe entre 4 fontes",
-    "hard": "5 perguntas - Adivinhe entre 6 fontes aleatórias",
-    "diabolical": "5 perguntas - Adivinhe entre 8 fontes aleatórias, com surpresas"
+    "easy": "10 perguntas — Open Sans ou Roboto?",
+    "medium": "10 perguntas — Escolha entre 4 fontes",
+    "hard": "5 perguntas — Escolha entre 6 fontes aleatórias",
+    "diabolical": "5 perguntas — Escolha entre 8 fontes aleatórias, com surpresas"
   },
   "countdown": {
     "label": "{difficulty}",
@@ -25,12 +31,18 @@
   "result": {
     "your_score": "Sua pontuação é",
     "perfect": "Perfeito!",
-    "sorry": "Desculpe, você não entrou na classificação.",
-    "enter_name": "Digite seu nome para a classificação",
+    "score_20": "Você estava olhando para as letras?",
+    "score_40": "Quase lá, mas as fontes não estão convencidas.",
+    "score_60": "Nada mau. Mas nada bom também. As tipografias estão te julgando.",
+    "score_80": "Quase. Você quase consegue sentir a diferença.",
+    "sorry": "Seu olho precisa de mais treino.",
+    "enter_name": "Digite seu nome para entrar na classificação",
     "name_placeholder": "Seu nome",
+    "email_placeholder": "E-mail (opcional)",
+    "email_hint": "Te avisamos se alguém te ultrapassar",
     "save": "Salvar",
     "saving": "…",
-    "saved": "Pontuação salva ✓",
+    "saved": "Salvo ✓",
     "save_error": "Não foi possível salvar. Tente novamente.",
     "try_again": "Tentar novamente",
     "leaderboard": "Classificação",

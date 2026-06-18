@@ -1,6 +1,6 @@
 {
   "title": "Open Sans 还是 Roboto？",
-  "subtitle": "你觉得自己比普通设计师厉害吗？<br>来测试你认出字体的能力吧。",
+  "subtitle": "你觉得自己比普通设计师更有眼力吗？<br>来测试你能否正确辨认这些字体。",
   "view_leaderboard": "查看排行榜 →",
   "difficulty": {
     "easy": "简单",
@@ -8,11 +8,17 @@
     "hard": "困难",
     "diabolical": "地狱"
   },
+  "difficulty_short": {
+    "easy": "简单",
+    "medium": "中等",
+    "hard": "困难",
+    "diabolical": "地狱"
+  },
   "meta": {
-    "easy": "10题 - Open Sans 还是 Roboto？",
-    "medium": "10题 - 从4种字体中猜",
-    "hard": "5题 - 从随机6种字体中猜",
-    "diabolical": "5题 - 从随机8种字体中猜，有惊喜"
+    "easy": "10题 — Open Sans 还是 Roboto？",
+    "medium": "10题 — 从4种字体中选择",
+    "hard": "5题 — 从随机6种字体中选择",
+    "diabolical": "5题 — 从随机8种字体中选择，含惊喜"
   },
   "countdown": {
     "label": "{difficulty}",
@@ -25,9 +31,15 @@
   "result": {
     "your_score": "你的得分是",
     "perfect": "完美！",
-    "sorry": "很遗憾，你没能上榜。",
-    "enter_name": "输入你的名字登上排行榜",
+    "score_20": "你真的在看那些字吗？",
+    "score_40": "差一点，但字体们不太买账。",
+    "score_60": "不算太差，也算不上好。字体正在审视你。",
+    "score_80": "差一点就成了。你几乎能感受到那种差别。",
+    "sorry": "你的眼力还需要更多训练。",
+    "enter_name": "输入名字登上排行榜",
     "name_placeholder": "你的名字",
+    "email_placeholder": "电子邮件（可选）",
+    "email_hint": "有人超越你时我们会通知你",
     "save": "保存",
     "saving": "…",
     "saved": "已保存 ✓",

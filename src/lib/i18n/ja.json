@@ -1,6 +1,6 @@
 {
   "title": "Open Sans か Roboto か？",
-  "subtitle": "普通のデザイナーより上だと思いますか？<br>フォントを正しく当ててみてください。",
+  "subtitle": "一般的なデザイナーより目が肥えていると思う？<br>フォントを正しく見分けてみよう。",
   "view_leaderboard": "ランキングを見る →",
   "difficulty": {
     "easy": "かんたん",
@@ -8,11 +8,17 @@
     "hard": "むずかしい",
     "diabolical": "地獄"
   },
+  "difficulty_short": {
+    "easy": "かんたん",
+    "medium": "ふつう",
+    "hard": "むずかしい",
+    "diabolical": "地獄"
+  },
   "meta": {
-    "easy": "10問 - Open Sans か Roboto か？",
-    "medium": "10問 - 4つのフォントから選ぶ",
-    "hard": "5問 - ランダムな6つのフォントから選ぶ",
-    "diabolical": "5問 - ランダムな8つのフォントから選ぶ、サプライズあり"
+    "easy": "10問 — Open Sans か Roboto か？",
+    "medium": "10問 — 4種類のフォントから選ぶ",
+    "hard": "5問 — ランダムな6種類のフォントから選ぶ",
+    "diabolical": "5問 — ランダムな8種類のフォントから選ぶ、サプライズあり"
   },
   "countdown": {
     "label": "{difficulty}",
@@ -25,14 +31,20 @@
   "result": {
     "your_score": "あなたのスコア",
     "perfect": "パーフェクト！",
-    "sorry": "残念、リスト入りならず。",
-    "enter_name": "ランキングに名前を入力してください",
+    "score_20": "ちゃんと文字を見ていた？",
+    "score_40": "惜しい。でもフォントたちは納得していない。",
+    "score_60": "まあまあ。とはいえ、まだまだ。タイポグラフィに見られてるよ。",
+    "score_80": "もう少し。違いがわかりかけている。",
+    "sorry": "もっと目を鍛えよう。",
+    "enter_name": "名前を入力してランキングに登録",
     "name_placeholder": "お名前",
-    "save": "保存",
+    "email_placeholder": "メールアドレス（任意）",
+    "email_hint": "誰かに追い抜かれたらお知らせします",
+    "save": "保存する",
     "saving": "…",
     "saved": "保存しました ✓",
-    "save_error": "保存できませんでした。もう一度試してください。",
-    "try_again": "もう一度",
+    "save_error": "保存できませんでした。もう一度お試しください。",
+    "try_again": "もう一度挑戦",
     "leaderboard": "ランキング",
     "change_difficulty": "難易度を変える"
   },

@@ -1,18 +1,24 @@
 {
   "title": "¿Open Sans o Roboto?",
-  "subtitle": "¿Crees que eres mejor que el diseñador promedio?<br>Demuestra que puedes adivinar estas fuentes.",
+  "subtitle": "¿Crees que tienes mejor ojo que el diseñador promedio?<br>Demuestra que puedes identificar estas fuentes.",
   "view_leaderboard": "Ver clasificación →",
   "difficulty": {
+    "easy": "Fácil",
+    "medium": "Intermedio",
+    "hard": "Difícil",
+    "diabolical": "Diabólico"
+  },
+  "difficulty_short": {
     "easy": "Fácil",
     "medium": "Medio",
     "hard": "Difícil",
     "diabolical": "Diabólico"
   },
   "meta": {
-    "easy": "10 preguntas - ¿Open Sans o Roboto?",
-    "medium": "10 preguntas - Elige entre 4 fuentes",
-    "hard": "5 preguntas - Elige entre 6 fuentes al azar",
-    "diabolical": "5 preguntas - Elige entre 8 fuentes al azar, con sorpresas"
+    "easy": "10 preguntas — ¿Open Sans o Roboto?",
+    "medium": "10 preguntas — Elige entre 4 fuentes",
+    "hard": "5 preguntas — Elige entre 6 fuentes al azar",
+    "diabolical": "5 preguntas — Elige entre 8 fuentes al azar, con sorpresas"
   },
   "countdown": {
     "label": "{difficulty}",
@@ -25,14 +31,20 @@
   "result": {
     "your_score": "Tu puntuación es",
     "perfect": "¡Perfecto!",
-    "sorry": "Lo siento, no entraste en la clasificación.",
-    "enter_name": "Ingresa tu nombre para la clasificación",
+    "score_20": "¿Estabas mirando las letras?",
+    "score_40": "Cerca, pero las fuentes no están convencidas.",
+    "score_60": "No está mal. Tampoco está bien. Las tipografías te están juzgando.",
+    "score_80": "Casi lo tienes. Casi puedes oler la diferencia.",
+    "sorry": "Tu ojo necesita más práctica.",
+    "enter_name": "Escribe tu nombre para entrar en la clasificación",
     "name_placeholder": "Tu nombre",
+    "email_placeholder": "Correo electrónico (opcional)",
+    "email_hint": "Te avisamos si alguien te supera en el ranking",
     "save": "Guardar",
     "saving": "…",
-    "saved": "Puntuación guardada ✓",
+    "saved": "Guardado ✓",
     "save_error": "No se pudo guardar. Inténtalo de nuevo.",
-    "try_again": "Intentar de nuevo",
+    "try_again": "Intentarlo de nuevo",
     "leaderboard": "Clasificación",
     "change_difficulty": "Cambiar dificultad"
   },

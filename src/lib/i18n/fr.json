@@ -1,37 +1,49 @@
 {
   "title": "Open Sans ou Roboto ?",
-  "subtitle": "Vous pensez être meilleur que le designer moyen ?<br>Voyez si vous pouvez identifier ces polices.",
+  "subtitle": "Tu penses avoir l'œil plus affûté que le designer moyen ?<br>Vérifie si tu peux identifier ces polices.",
   "view_leaderboard": "Voir le classement →",
   "difficulty": {
+    "easy": "Facile",
+    "medium": "Intermédiaire",
+    "hard": "Difficile",
+    "diabolical": "Diabolique"
+  },
+  "difficulty_short": {
     "easy": "Facile",
     "medium": "Moyen",
     "hard": "Difficile",
     "diabolical": "Diabolique"
   },
   "meta": {
-    "easy": "10 questions - Open Sans ou Roboto ?",
-    "medium": "10 questions - Devinez parmi 4 polices",
-    "hard": "5 questions - Devinez parmi 6 polices au hasard",
-    "diabolical": "5 questions - Devinez parmi 8 polices au hasard, avec des surprises"
+    "easy": "10 questions — Open Sans ou Roboto ?",
+    "medium": "10 questions — Devine parmi 4 polices",
+    "hard": "5 questions — Devine parmi 6 polices au hasard",
+    "diabolical": "5 questions — Devine parmi 8 polices au hasard, avec des surprises"
   },
   "countdown": {
     "label": "{difficulty}",
-    "sub": "Préparez-vous…",
+    "sub": "Prépare-toi…",
     "not_ready": ["Attends, stop !", "Une seconde !", "Mes yeux s'ajustent encore…", "Pas encore !"]
   },
   "game": {
     "back_to_menu": "Retour au menu"
   },
   "result": {
-    "your_score": "Votre score est",
+    "your_score": "Ton score est",
     "perfect": "Parfait !",
-    "sorry": "Dommage, vous n'êtes pas dans le classement.",
-    "enter_name": "Entrez votre nom pour le classement",
-    "name_placeholder": "Votre nom",
+    "score_20": "Tu regardais vraiment les lettres ?",
+    "score_40": "Presque, mais les polices ne sont pas convaincues.",
+    "score_60": "Pas mal. Pas terrible non plus. Les typographies te jugent.",
+    "score_80": "Tout proche. Tu peux presque sentir la différence.",
+    "sorry": "Ton œil a besoin de plus d'entraînement.",
+    "enter_name": "Entre ton nom pour rejoindre le classement",
+    "name_placeholder": "Ton nom",
+    "email_placeholder": "E-mail (facultatif)",
+    "email_hint": "On te prévient si quelqu'un te dépasse",
     "save": "Enregistrer",
     "saving": "…",
-    "saved": "Score enregistré ✓",
-    "save_error": "Impossible d'enregistrer. Réessayez.",
+    "saved": "Enregistré ✓",
+    "save_error": "Impossible d'enregistrer. Réessaie.",
     "try_again": "Réessayer",
     "leaderboard": "Classement",
     "change_difficulty": "Changer de difficulté"
@@ -40,8 +52,8 @@
     "title": "Classement",
     "back": "← Retour",
     "loading": "Chargement…",
-    "empty": "Pas encore de score parfait. Soyez le premier !",
-    "error": "Échec du chargement du classement."
+    "empty": "Pas encore de score parfait. Sois le premier !",
+    "error": "Impossible de charger le classement."
   },
   "theme": {
     "dark": "Mode sombre",
