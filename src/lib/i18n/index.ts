@@ -2,6 +2,7 @@ import { register, init, getLocaleFromNavigator } from 'svelte-i18n';
 
 register('en', () => import('./en.json'));
 register('ja', () => import('./ja.json'));
+register('ko', () => import('./ko.json'));
 register('zh', () => import('./zh.json'));
 register('es', () => import('./es.json'));
 register('fr', () => import('./fr.json'));

@@ -1,0 +1,63 @@
+{
+  "title": "Open Sans 아니면 Roboto?",
+  "subtitle": "평균적인 디자이너보다 잘 알고 있나요?<br>폰트를 맞춰보세요.",
+  "view_leaderboard": "순위표",
+  "difficulty": {
+    "easy": "식은 죽 먹기",
+    "medium": "적당히 어려움",
+    "hard": "고난의 길",
+    "diabolical": "악마적 난이도"
+  },
+  "difficulty_short": {
+    "easy": "쉬움",
+    "medium": "보통",
+    "hard": "어려움",
+    "diabolical": "악마"
+  },
+  "meta": {
+    "easy": "10문제 - Open Sans 또는 Roboto?",
+    "medium": "10문제 - Open Sans, Roboto, Arial, Montserrat",
+    "hard": "5문제 - 6가지 폰트 중 랜덤 맞추기",
+    "diabolical": "5문제 - 8가지 폰트 중 랜덤 맞추기, 서프라이즈 포함"
+  },
+  "countdown": {
+    "label": "{difficulty}",
+    "sub": "준비하세요…",
+    "not_ready": ["잠깐만요!", "1초만요!", "눈이 아직 적응 중…", "아직, 아직이요!"]
+  },
+  "game": {
+    "back_to_menu": "메뉴로 돌아가기"
+  },
+  "result": {
+    "your_score": "당신의 점수는",
+    "perfect": "완벽한 눈.",
+    "score_20": "글자를 보긴 하셨나요?",
+    "score_40": "아쉽네요. 폰트들이 감동받지 못했어요.",
+    "score_60": "나쁘지 않아요. 그렇다고 좋지도 않고요. 세리프들이 지켜보고 있어요.",
+    "score_80": "거의 다 왔어요. 차이가 느껴지실 거예요.",
+    "sorry": "눈이 더 훈련이 필요해요. 폰트들은 알고 있어요.",
+    "enter_name": "명예의 전당에 이름을 올리세요",
+    "name_placeholder": "이름",
+    "email_placeholder": "이메일 (선택)",
+    "email_hint": "누군가 당신을 추월하면 알려드릴게요",
+    "save": "새기기",
+    "saving": "…",
+    "saved": "영원히 기록됨 ✓",
+    "save_error": "오류가 발생했어요. 다시 시도해 주세요.",
+    "perfect_not_on_board": "완벽해요 — 하지만 명예의 전당은 이미 더 빠른 완벽주의자들로 가득 차 있어요. 점수는 저장됐지만, 지금은 아쉽게도 순위권 밖이에요.",
+    "try_again": "다시 도전",
+    "leaderboard": "명예의 전당",
+    "change_difficulty": "너무 쉬운가요? 너무 어렵나요?"
+  },
+  "leaderboard": {
+    "title": "순위표",
+    "back": "← 뒤로",
+    "loading": "불러오는 중…",
+    "empty": "아직 만점자가 없어요. 첫 번째가 되세요!",
+    "error": "순위표를 불러오지 못했어요."
+  },
+  "theme": {
+    "dark": "다크 모드",
+    "light": "라이트 모드"
+  }
+}
