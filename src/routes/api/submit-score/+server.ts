@@ -12,20 +12,76 @@ const supabase = createClient(
 
 const resend = new Resend(RESEND_API_KEY);
 
+const ALLOWED_DIFFICULTIES = ['easy', 'medium', 'hard', 'diabolical'];
+const MAX_NAME_LENGTH = 32;
+const MAX_EMAIL_LENGTH = 254;
+// Basic, conservative email shape check (defense-in-depth, not full RFC 5322)
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+/**
+ * Escape a string for safe interpolation into HTML.
+ * Prevents stored HTML/script injection in notification emails.
+ */
+function escapeHtml(input: string): string {
+	return input
+		.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+		.replace(/"/g, '&quot;')
+		.replace(/'/g, '&#39;');
+}
+
+/**
+ * Strip control characters (incl. CR/LF) for safe use in an email header
+ * such as the subject line. Prevents header-injection attempts.
+ */
+function sanitizeHeader(input: string): string {
+	// eslint-disable-next-line no-control-regex
+	return input.replace(/[\r\n\u0000-\u001F\u007F]/g, ' ').trim();
+}
+
 export const POST: RequestHandler = async ({ request }) => {
 	const body = await request.json().catch(() => null);
 	if (!body) throw error(400, 'Invalid JSON');
 
 	const { name, email, time_ms, difficulty } = body as {
-		name: string;
-		email?: string;
-		time_ms: number;
-		difficulty: string;
+		name: unknown;
+		email?: unknown;
+		time_ms: unknown;
+		difficulty: unknown;
 	};
 
-	if (!name?.trim() || typeof time_ms !== 'number' || !difficulty) {
-		throw error(400, 'Missing required fields');
+	// ------------------------------------------------------------------
+	// 0. Strict server-side validation (never trust the client)
+	// ------------------------------------------------------------------
+	if (typeof name !== 'string' || !name.trim()) {
+		throw error(400, 'Missing or invalid name');
 	}
+	if (typeof time_ms !== 'number' || !Number.isFinite(time_ms) || time_ms < 0) {
+		throw error(400, 'Missing or invalid time');
+	}
+	if (typeof difficulty !== 'string' || !ALLOWED_DIFFICULTIES.includes(difficulty)) {
+		throw error(400, 'Invalid difficulty');
+	}
+
+	const cleanName = name.trim().slice(0, MAX_NAME_LENGTH);
+
+	let cleanEmail: string | null = null;
+	if (email !== undefined && email !== null && email !== '') {
+		if (
+			typeof email !== 'string' ||
+			email.length > MAX_EMAIL_LENGTH ||
+			!EMAIL_RE.test(email.trim())
+		) {
+			throw error(400, 'Invalid email');
+		}
+		cleanEmail = email.trim();
+	}
+
+	// Pre-escaped/-sanitized values for use in the outgoing email
+	const safeName = escapeHtml(cleanName);
+	const safeDifficulty = escapeHtml(difficulty);
+	const safeSubject = sanitizeHeader(`${cleanName} just beat your score!`);
 
 	// ------------------------------------------------------------------
 	// 1. Find existing entries that will be beaten by this new score
@@ -43,8 +99,8 @@ export const POST: RequestHandler = async ({ request }) => {
 	// 2. Insert new score
 	// ------------------------------------------------------------------
 	const { error: insertError } = await supabase.from('leaderboard').insert({
-		name: name.trim(),
-		email: email?.trim() || null,
+		name: cleanName,
+		email: cleanEmail,
 		time_ms,
 		difficulty
 	});
@@ -67,12 +123,12 @@ export const POST: RequestHandler = async ({ request }) => {
 					from: 'Open Sans or Roboto? <montserrat@opensansorroboto.com>',
 					replyTo: 'montserrat@opensansorroboto.com',
 					to: row.email as string,
-					subject: `${name} just beat your score!`,
+					subject: safeSubject,
 					html: `
 <div style="font-family:system-ui,sans-serif;max-width:480px;margin:0 auto;padding:2rem;color:#111">
 	 <h2 style="font-size:1.25rem;font-weight:600;margin:0 0 1rem">Your score was just beaten 👀</h2>
 	 <p style="margin:0 0 0.75rem;color:#444">
-	   <strong>${name}</strong> just completed the <strong>${difficulty}</strong> challenge faster than you on
+	   <strong>${safeName}</strong> just completed the <strong>${safeDifficulty}</strong> challenge faster than you on
 	   <a href="https://opensansorroboto.com" style="color:#111">Open Sans or Roboto?</a>
 	 </p>
 	 <p style="margin:0 0 1.5rem;color:#444">Think you can reclaim the top spot?</p>
