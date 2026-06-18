@@ -61,6 +61,12 @@
 		padding: 4rem 2rem;
 	}
 
+	@media (max-width: 640px) {
+		.difficulty-selector {
+			padding: 1.5rem 1rem;
+		}
+	}
+
 	.hero { display: flex; flex-direction: column; align-items: center; }
 
 	.title {

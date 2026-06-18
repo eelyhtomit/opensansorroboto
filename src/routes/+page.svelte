@@ -85,6 +85,7 @@
 			<Leaderboard />
 		{/if}
 
+		{#if $game.phase !== 'countdown'}
 		<div class="footer">
 			<div class="locale-switcher">
 				<select
@@ -101,11 +102,12 @@
 				class="theme-toggle"
 				onclick={() => theme.toggle()}
 				aria-label="Toggle dark mode"
-				disabled={$game.difficulty === 'diabolical' && ($game.phase === 'playing' || $game.phase === 'countdown')}
+				disabled={$game.difficulty === 'diabolical' && $game.phase === 'playing'}
 			>
 				{$theme === 'dark' ? $t('theme.light') : $t('theme.dark')}
 			</button>
 		</div>
+		{/if}
 
 	</div>
 </main>
@@ -188,6 +190,16 @@
 		padding: 2rem 1rem 3rem;
 		position: relative;
 		z-index: 1;
+	}
+
+	@media (max-width: 640px) {
+		.app {
+			padding: 0.5rem 0.5rem 2rem;
+		}
+
+		.playing-layout {
+			padding-bottom: 160px;
+		}
 	}
 
 	.container { width: 100%; max-width: 540px; display: flex; flex-direction: column; gap: 0; position: relative; z-index: 1; }

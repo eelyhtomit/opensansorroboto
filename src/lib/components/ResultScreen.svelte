@@ -146,6 +146,12 @@
 		width: 100%;
 	}
 
+	@media (max-width: 640px) {
+		.result-screen {
+			padding: 1.5rem 1rem;
+		}
+	}
+
 	.your-score-label { font-size: 0.8rem; color: var(--fg-muted); margin: 0; letter-spacing: 0.05em; text-transform: uppercase; }
 	.score-label { font-size: 2.5rem; font-weight: 600; margin: 0; color: var(--fg); font-variant-numeric: tabular-nums; }
 	.perfect-label { font-size: 1.5rem; font-weight: 500; margin: 0; color: var(--fg); }

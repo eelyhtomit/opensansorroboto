@@ -41,6 +41,20 @@
 		width: 100%;
 	}
 
+	@media (max-width: 640px) {
+		.answer-grid {
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			padding: 0.75rem;
+			background: var(--bg);
+			border-top: 1px solid var(--border);
+			z-index: 10;
+			gap: 0.5rem;
+		}
+	}
+
 	@media (max-width: 380px) {
 		.answer-grid {
 			grid-template-columns: 1fr 1fr;
