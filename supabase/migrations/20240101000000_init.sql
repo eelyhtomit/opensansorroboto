@@ -25,17 +25,23 @@ create table if not exists leaderboard (
 -- Phrases: public read-only
 alter table phrases enable row level security;
 
-create policy "phrases_select" on phrases
-  for select using (true);
+do $$ begin
+  create policy "phrases_select" on phrases for select using (true);
+exception when duplicate_object then null;
+end $$;
 
 -- Leaderboard: public read + insert only (no update/delete)
 alter table leaderboard enable row level security;
 
-create policy "leaderboard_select" on leaderboard
-  for select using (true);
+do $$ begin
+  create policy "leaderboard_select" on leaderboard for select using (true);
+exception when duplicate_object then null;
+end $$;
 
-create policy "leaderboard_insert" on leaderboard
-  for insert with check (true);
+do $$ begin
+  create policy "leaderboard_insert" on leaderboard for insert with check (true);
+exception when duplicate_object then null;
+end $$;
 
 -- 4. SEED PHRASES
 insert into phrases (text, category) values
@@ -88,4 +94,5 @@ insert into phrases (text, category) values
   ('Look at the lowercase a — is it single or double storey', 'challenge'),
   ('Check the capital R — does the leg kick out or sit straight', 'challenge'),
   ('The letter e reveals much about a typeface personality', 'challenge'),
-  ('Notice how the dots above i and j are shaped', 'challenge');
+  ('Notice how the dots above i and j are shaped', 'challenge')
+on conflict do nothing;

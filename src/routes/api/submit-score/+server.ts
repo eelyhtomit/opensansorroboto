@@ -36,7 +36,8 @@ export const POST: RequestHandler = async ({ request }) => {
 		.select('id, name, email')
 		.eq('difficulty', difficulty)
 		.gt('time_ms', time_ms) // their time is slower → they're beaten
-		.not('email', 'is', null);
+		.not('email', 'is', null)
+		.is('notified_at', null); // only notify once — skip already-notified entries
 
 	// ------------------------------------------------------------------
 	// 2. Insert new score
@@ -57,34 +58,43 @@ export const POST: RequestHandler = async ({ request }) => {
 	// 3. Notify beaten players (fire-and-forget, don't block the response)
 	// ------------------------------------------------------------------
 	if (beaten && beaten.length > 0) {
-		const notifications = beaten
-			.filter((row) => row.email)
-			.map((row) =>
-				resend.emails.send({
+		const eligibleRows = beaten.filter((row) => row.email);
+
+		// Send notifications and mark each row as notified in one pass
+		await Promise.allSettled(
+			eligibleRows.map(async (row) => {
+				const result = await resend.emails.send({
 					from: 'Open Sans or Roboto? <montserrat@opensansorroboto.com>',
 					replyTo: 'montserrat@opensansorroboto.com',
 					to: row.email as string,
 					subject: `${name} just beat your score!`,
 					html: `
 <div style="font-family:system-ui,sans-serif;max-width:480px;margin:0 auto;padding:2rem;color:#111">
-  <h2 style="font-size:1.25rem;font-weight:600;margin:0 0 1rem">Your score was just beaten 👀</h2>
-  <p style="margin:0 0 0.75rem;color:#444">
-    <strong>${name}</strong> just completed the <strong>${difficulty}</strong> challenge faster than you on
-    <a href="https://opensansorroboto.com" style="color:#111">Open Sans or Roboto?</a>
-  </p>
-  <p style="margin:0 0 1.5rem;color:#444">Think you can reclaim the top spot?</p>
-  <a href="https://opensansorroboto.com"
-     style="display:inline-block;padding:0.65rem 1.25rem;background:#111;color:#fff;text-decoration:none;font-size:0.9rem">
-    Play now →
-  </a>
-  <p style="margin:1.5rem 0 0;font-size:0.75rem;color:#999">
-    You received this because you opted in when saving your score.
-  </p>
+	 <h2 style="font-size:1.25rem;font-weight:600;margin:0 0 1rem">Your score was just beaten 👀</h2>
+	 <p style="margin:0 0 0.75rem;color:#444">
+	   <strong>${name}</strong> just completed the <strong>${difficulty}</strong> challenge faster than you on
+	   <a href="https://opensansorroboto.com" style="color:#111">Open Sans or Roboto?</a>
+	 </p>
+	 <p style="margin:0 0 1.5rem;color:#444">Think you can reclaim the top spot?</p>
+	 <a href="https://opensansorroboto.com"
+	    style="display:inline-block;padding:0.65rem 1.25rem;background:#111;color:#fff;text-decoration:none;font-size:0.9rem">
+	   Play again →
+	 </a>
+	 <p style="margin:1.5rem 0 0;font-size:0.75rem;color:#999">
+	   You received this because you opted in when saving your score.
+	 </p>
 </div>`
-				})
-			);
+				});
 
-		await Promise.allSettled(notifications);
+				// Only mark as notified if the email was sent successfully
+				if (!result.error) {
+					await supabase
+						.from('leaderboard')
+						.update({ notified_at: new Date().toISOString() })
+						.eq('id', row.id);
+				}
+			})
+		);
 	}
 
 	return json({ ok: true });

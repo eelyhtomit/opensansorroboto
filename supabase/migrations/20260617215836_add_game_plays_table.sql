@@ -14,9 +14,13 @@ create table if not exists game_plays (
 -- Public insert-only (no read needed from client)
 alter table game_plays enable row level security;
 
-create policy "game_plays_insert" on game_plays
-  for insert with check (true);
+do $$ begin
+  create policy "game_plays_insert" on game_plays for insert with check (true);
+exception when duplicate_object then null;
+end $$;
 
 -- Allow service-role reads for analytics (anon cannot read)
-create policy "game_plays_select_service" on game_plays
-  for select using (auth.role() = 'service_role');
+do $$ begin
+  create policy "game_plays_select_service" on game_plays for select using (auth.role() = 'service_role');
+exception when duplicate_object then null;
+end $$;
