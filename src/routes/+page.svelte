@@ -147,6 +147,10 @@
 
 	:global([data-theme="dark"]) .marquee-text { color: rgba(255, 255, 255, 0.08); }
 
+	@media (max-width: 640px) {
+		.bg-wrap { display: none; }
+	}
+
 	@keyframes scroll-up {
 		from { transform: translateY(0); }
 		to   { transform: translateY(-50%); }
