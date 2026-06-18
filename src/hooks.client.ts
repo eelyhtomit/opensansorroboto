@@ -1,9 +1,12 @@
 import { handleErrorWithSentry, replayIntegration } from '@sentry/sveltekit';
 import * as Sentry from '@sentry/sveltekit';
-import { PUBLIC_SENTRY_DSN } from '$env/static/public';
+import { env } from '$env/dynamic/public';
 
+// We read the DSN from `$env/dynamic/public` (resolved at runtime) rather than
+// `$env/static/public` so a missing `PUBLIC_SENTRY_DSN` does not fail the build.
+// When the DSN is undefined the Sentry SDK simply stays disabled (no-op).
 Sentry.init({
-	dsn: PUBLIC_SENTRY_DSN,
+	dsn: env.PUBLIC_SENTRY_DSN,
 
 	// We recommend adjusting this value in production, or using a sampler
 	// for finer control over the volume of performance traces collected.
