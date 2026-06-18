@@ -9,28 +9,30 @@ type StyleVariant = Pick<Question, 'fontStyle' | 'fontWeight' | 'textTransform' 
 // Phrases cache — kick off the fetch immediately when this module is imported
 // so the data is ready (or nearly ready) by the time the user picks a difficulty.
 // ---------------------------------------------------------------------------
-let phrasesPromise: Promise<string[]> | null = null;
+let phrasesCache: string[] | null = null;
+let phrasesFetchInFlight: Promise<string[]> | null = null;
 
 function fetchPhrases(): Promise<string[]> {
-	if (phrasesPromise) return phrasesPromise;
-	phrasesPromise = supabase
-		.from('phrases')
-		.select('text')
-		.order('id')
-		.limit(100)
-		.then(({ data, error }) => {
-			if (error) {
-				// Allow retry on next call
-				phrasesPromise = null;
-				throw new Error(`Failed to fetch phrases: ${error.message}`);
-			}
-			if (!data || data.length === 0) {
-				phrasesPromise = null;
-				throw new Error('Not enough phrases in the database. Please seed the phrases table.');
-			}
-			return data.map((d: { text: string }) => d.text);
-		});
-	return phrasesPromise;
+	// Already resolved — return synchronously wrapped value
+	if (phrasesCache) return Promise.resolve(phrasesCache);
+	// In-flight request exists — share it
+	if (phrasesFetchInFlight) return phrasesFetchInFlight;
+
+	const p = Promise.resolve(
+		supabase.from('phrases').select('text').order('id').limit(100)
+	).then(({ data, error }: { data: { text: string }[] | null; error: { message: string } | null }) => {
+		phrasesFetchInFlight = null;
+		if (error) throw new Error(`Failed to fetch phrases: ${error.message}`);
+		if (!data || data.length === 0) throw new Error('Not enough phrases in the database. Please seed the phrases table.');
+		phrasesCache = data.map((d) => d.text);
+		return phrasesCache as string[];
+	}).catch((err: unknown) => {
+		phrasesFetchInFlight = null;
+		throw err;
+	});
+
+	phrasesFetchInFlight = p;
+	return p;
 }
 
 // Warm up immediately on module import (fires in the background, errors are
