@@ -44,6 +44,7 @@
     "saving": "…",
     "saved": "Guardado ✓",
     "save_error": "No se pudo guardar. Inténtalo de nuevo.",
+    "perfect_not_on_board": "Perfecto — pero el Salón de la Fama ya está lleno de perfeccionistas más rápidos. Tu puntuación quedó guardada, solo fuera del podio por ahora.",
     "try_again": "Intentarlo de nuevo",
     "leaderboard": "Clasificación",
     "change_difficulty": "Cambiar dificultad"

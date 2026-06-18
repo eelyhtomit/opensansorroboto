@@ -111,6 +111,22 @@ export const POST: RequestHandler = async ({ request }) => {
 	}
 
 	// ------------------------------------------------------------------
+	// 2b. Compute rank (how many entries are faster than this score)
+	// ------------------------------------------------------------------
+	const LEADERBOARD_LIMITS: Record<string, number> = { easy: 50, medium: 50, hard: 20, diabolical: 20 };
+	const limit = LEADERBOARD_LIMITS[difficulty] ?? 50;
+
+	const { count: fasterCount } = await supabase
+		.from('leaderboard')
+		.select('*', { count: 'exact', head: true })
+		.eq('difficulty', difficulty)
+		.lt('time_ms', time_ms);
+
+	// rank is 1-based; fasterCount = number of entries strictly faster
+	const rank = (fasterCount ?? 0) + 1;
+	const onBoard = rank <= limit;
+
+	// ------------------------------------------------------------------
 	// 3. Notify beaten players (fire-and-forget, don't block the response)
 	// ------------------------------------------------------------------
 	if (beaten && beaten.length > 0) {
@@ -153,5 +169,5 @@ export const POST: RequestHandler = async ({ request }) => {
 		);
 	}
 
-	return json({ ok: true });
+	return json({ ok: true, onBoard, rank });
 };

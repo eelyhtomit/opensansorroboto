@@ -10,6 +10,7 @@
 	let submitted = $state(false);
 	let submitting = $state(false);
 	let submitError = $state('');
+	let notOnBoard = $state(false);
 
 	// Fire-and-forget: record every completed game play
 	onMount(() => {
@@ -55,11 +56,18 @@
 			});
 
 			if (!res.ok) throw new Error('server error');
+			const data = await res.json();
 			// Persist for next session autofill
 			localStorage.setItem('osrr_name', name.trim());
 			if (email.trim()) localStorage.setItem('osrr_email', email.trim());
-			// Navigate straight to leaderboard with the name highlighted
-			game.goToLeaderboardHighlighting(name.trim());
+			if (data.onBoard) {
+				// Navigate straight to leaderboard with the name highlighted
+				game.goToLeaderboardHighlighting(name.trim());
+			} else {
+				// Score saved but outside the leaderboard window
+				submitted = true;
+				notOnBoard = true;
+			}
 		} catch {
 			submitError = $t('result.save_error');
 		} finally {
@@ -75,7 +83,9 @@
 		<p class="perfect-label">{$t('result.perfect')}</p>
 		<p class="time-label">{formatTime($game.timerMs)}</p>
 
-		{#if !submitted}
+		{#if notOnBoard}
+			<p class="not-on-board">{$t('result.perfect_not_on_board')}</p>
+		{:else if !submitted}
 			<div class="name-entry">
 				<p class="enter-name-label">{$t('result.enter_name')}</p>
 				<div class="name-row">
@@ -141,6 +151,7 @@
 	.perfect-label { font-size: 1.5rem; font-weight: 500; margin: 0; color: var(--fg); }
 	.time-label { font-size: 1rem; color: var(--fg-muted); font-variant-numeric: tabular-nums; margin: -1.25rem 0 0; }
 	.sorry { font-size: 1rem; color: var(--fg); margin: 0; }
+	.not-on-board { font-size: 0.9rem; color: var(--fg-muted); margin: 0; max-width: 340px; text-align: center; line-height: 1.5; }
 
 	.name-entry { display: flex; flex-direction: column; align-items: center; gap: 0.6rem; width: 100%; max-width: 340px; }
 	.enter-name-label { font-size: 0.85rem; color: var(--fg-muted); margin: 0; }
