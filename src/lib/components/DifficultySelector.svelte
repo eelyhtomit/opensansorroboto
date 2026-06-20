@@ -50,6 +50,17 @@
 	<button class="leaderboard-link" onclick={() => game.goTo('leaderboard')}>
 		{$t('view_leaderboard')}
 	</button>
+
+	<div class="levels">
+		<button
+			class="level-btn custom-btn"
+			disabled={loading}
+			onclick={() => game.goTo('custom_config')}
+		>
+			<span class="level-name">{$t('difficulty.custom')}</span>
+			<span class="level-meta">{$t('meta.custom')}</span>
+		</button>
+	</div>
 </div>
 
 <style>
@@ -102,6 +113,8 @@
 
 	.level-btn:hover:not(:disabled) { background: var(--surface-hover); border-color: var(--fg-muted); }
 	.level-btn:disabled { opacity: 0.4; cursor: wait; }
+
+	.custom-btn { border-style: dashed; margin-top: 0.5rem; }
 
 	.level-name { font-weight: 500; font-size: 0.95rem; color: var(--fg); }
 	.level-meta { font-size: 0.75rem; color: var(--fg-muted); }

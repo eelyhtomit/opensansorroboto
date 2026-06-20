@@ -1,8 +1,11 @@
 <script lang="ts">
 	import { game, isPerfect, score } from '$lib/stores/gameStore';
-	import { generateQuestions } from '$lib/utils/generateQuestions';
+	import { generateQuestions, generateCustomQuestions } from '$lib/utils/generateQuestions';
 	import { t } from 'svelte-i18n';
 	import { onMount } from 'svelte';
+
+	// Custom mode is a practice playground — no leaderboard, no score tracking.
+	const isCustom = $derived($game.difficulty === 'custom');
 
 	// Pre-fill from previous session
 	let name = $state(localStorage.getItem('osrr_name') ?? '');
@@ -11,9 +14,11 @@
 	let submitting = $state(false);
 	let submitError = $state('');
 	let notOnBoard = $state(false);
+	let replaying = $state(false);
 
-	// Fire-and-forget: record every completed game play
+	// Fire-and-forget: record every completed game play (skip for custom mode)
 	onMount(() => {
+		if ($game.difficulty === 'custom') return;
 		fetch('/api/track-play', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
@@ -34,8 +39,19 @@
 	}
 
 	async function tryAgain() {
-		const { questions, fontPool } = await generateQuestions($game.difficulty);
-		game.startGameWithDifficulty(questions, $game.difficulty, fontPool);
+		replaying = true;
+		try {
+			if (isCustom) {
+				// Reuse the same font pool the player configured for this session.
+				const { questions, fontPool } = await generateCustomQuestions($game.fontPool);
+				game.startGameWithDifficulty(questions, 'custom', fontPool);
+			} else {
+				const { questions, fontPool } = await generateQuestions($game.difficulty);
+				game.startGameWithDifficulty(questions, $game.difficulty, fontPool);
+			}
+		} finally {
+			replaying = false;
+		}
 	}
 
 	async function submitScore() {
@@ -79,61 +95,78 @@
 <div class="result-screen">
 	<p class="your-score-label">{$t('result.your_score')}</p>
 	<p class="score-label">{$score}/{$game.questions.length}</p>
-	{#if $isPerfect}
-		<p class="perfect-label">{$t('result.perfect')}</p>
+
+	{#if isCustom}
 		<p class="time-label">{formatTime($game.timerMs)}</p>
 
-		{#if notOnBoard}
-			<p class="not-on-board">{$t('result.perfect_not_on_board')}</p>
-		{:else if !submitted}
-			<div class="name-entry">
-				<p class="enter-name-label">{$t('result.enter_name')}</p>
-				<div class="name-row">
-					<input
-						type="text"
-						placeholder={$t('result.name_placeholder')}
-						maxlength="32"
-						bind:value={name}
-						onkeydown={(e) => e.key === 'Enter' && submitScore()}
-					/>
-					<button class="submit-btn" onclick={submitScore} disabled={submitting || !name.trim()}>
-						{submitting ? $t('result.saving') : $t('result.save')}
-					</button>
-				</div>
-				<div class="email-row">
-					<input
-						type="email"
-						placeholder={$t('result.email_placeholder')}
-						maxlength="254"
-						bind:value={email}
-						onkeydown={(e) => e.key === 'Enter' && submitScore()}
-					/>
-					<p class="email-hint">{$t('result.email_hint')}</p>
-				</div>
-				{#if submitError}<p class="error">{submitError}</p>{/if}
-			</div>
-		{/if}
+		<div class="result-actions">
+			<button class="action-btn primary" onclick={tryAgain} disabled={replaying}>
+				{replaying ? $t('custom.starting') : $t('custom.play_again')}
+			</button>
+			<button class="action-btn" onclick={() => game.goTo('custom_config')}>
+				{$t('custom.change_fonts')}
+			</button>
+			<button class="action-btn" onclick={() => game.goTo('home')}>
+				{$t('result.change_difficulty')}
+			</button>
+		</div>
 	{:else}
-		<p class="sorry">
-			{#if $score <= 2}
-				{$t('result.score_20')}
-			{:else if $score <= 4}
-				{$t('result.score_40')}
-			{:else if $score <= 6}
-				{$t('result.score_60')}
-			{:else if $score <= 8}
-				{$t('result.score_80')}
-			{:else}
-				{$t('result.sorry')}
-			{/if}
-		</p>
-	{/if}
+		{#if $isPerfect}
+			<p class="perfect-label">{$t('result.perfect')}</p>
+			<p class="time-label">{formatTime($game.timerMs)}</p>
 
-	<div class="result-actions">
-		<button class="action-btn primary" onclick={tryAgain}>{$t('result.try_again')}</button>
-		<button class="action-btn" onclick={() => game.goTo('leaderboard')}>{$t('result.leaderboard')}</button>
-		<button class="action-btn" onclick={() => game.goTo('home')}>{$t('result.change_difficulty')}</button>
-	</div>
+			{#if notOnBoard}
+				<p class="not-on-board">{$t('result.perfect_not_on_board')}</p>
+			{:else if !submitted}
+				<div class="name-entry">
+					<p class="enter-name-label">{$t('result.enter_name')}</p>
+					<div class="name-row">
+						<input
+							type="text"
+							placeholder={$t('result.name_placeholder')}
+							maxlength="32"
+							bind:value={name}
+							onkeydown={(e) => e.key === 'Enter' && submitScore()}
+						/>
+						<button class="submit-btn" onclick={submitScore} disabled={submitting || !name.trim()}>
+							{submitting ? $t('result.saving') : $t('result.save')}
+						</button>
+					</div>
+					<div class="email-row">
+						<input
+							type="email"
+							placeholder={$t('result.email_placeholder')}
+							maxlength="254"
+							bind:value={email}
+							onkeydown={(e) => e.key === 'Enter' && submitScore()}
+						/>
+						<p class="email-hint">{$t('result.email_hint')}</p>
+					</div>
+					{#if submitError}<p class="error">{submitError}</p>{/if}
+				</div>
+			{/if}
+		{:else}
+			<p class="sorry">
+				{#if $score <= 2}
+					{$t('result.score_20')}
+				{:else if $score <= 4}
+					{$t('result.score_40')}
+				{:else if $score <= 6}
+					{$t('result.score_60')}
+				{:else if $score <= 8}
+					{$t('result.score_80')}
+				{:else}
+					{$t('result.sorry')}
+				{/if}
+			</p>
+		{/if}
+
+		<div class="result-actions">
+			<button class="action-btn primary" onclick={tryAgain} disabled={replaying}>{$t('result.try_again')}</button>
+			<button class="action-btn" onclick={() => game.goTo('leaderboard')}>{$t('result.leaderboard')}</button>
+			<button class="action-btn" onclick={() => game.goTo('home')}>{$t('result.change_difficulty')}</button>
+		</div>
+	{/if}
 </div>
 
 <style>

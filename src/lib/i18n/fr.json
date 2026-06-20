@@ -6,19 +6,37 @@
     "easy": "Facile",
     "medium": "Intermédiaire",
     "hard": "Difficile",
-    "diabolical": "Diabolique"
+    "diabolical": "Diabolique",
+    "custom": "Personnalisé"
   },
   "difficulty_short": {
     "easy": "Facile",
     "medium": "Moyen",
     "hard": "Difficile",
-    "diabolical": "Diabolique"
+    "diabolical": "Diabolique",
+    "custom": "Ou crée ton propre jeu de devinette de polices"
   },
   "meta": {
     "easy": "10 questions — Open Sans ou Roboto ?",
     "medium": "10 questions — Devine parmi 4 polices",
     "hard": "5 questions — Devine parmi 6 polices au hasard",
-    "diabolical": "5 questions — Devine parmi 8 polices au hasard, avec des surprises"
+    "diabolical": "5 questions — Devine parmi 8 polices au hasard, avec des surprises",
+    "custom": "Choisis quelles polices et parmi combien deviner"
+  },
+  "custom": {
+    "title": "Crée ta propre partie",
+    "subtitle": "Choisis quelles polices et parmi combien deviner, puis joue {count} questions. Juste pour t'entraîner — sans classement.",
+    "how_many": "Deviner parmi combien de polices ?",
+    "pick_fonts": "Choisis tes polices",
+    "select_font": "Choisis une police…",
+    "start": "Lancer la partie",
+    "starting": "Mélange…",
+    "back": "← Retour au menu",
+    "duplicate_error": "Chaque case doit avoir une police différente.",
+    "review": "Détail par question",
+    "no_answer": "Sans réponse",
+    "play_again": "Rejouer (mêmes polices)",
+    "change_fonts": "Choisir d'autres polices"
   },
   "countdown": {
     "label": "{difficulty}",

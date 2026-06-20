@@ -6,19 +6,37 @@
     "easy": "Fácil",
     "medium": "Intermedio",
     "hard": "Difícil",
-    "diabolical": "Diabólico"
+    "diabolical": "Diabólico",
+    "custom": "Personalizado"
   },
   "difficulty_short": {
     "easy": "Fácil",
     "medium": "Medio",
     "hard": "Difícil",
-    "diabolical": "Diabólico"
+    "diabolical": "Diabólico",
+    "custom": "O crea tu propio juego de adivinar fuentes"
   },
   "meta": {
     "easy": "10 preguntas — ¿Open Sans o Roboto?",
     "medium": "10 preguntas — Elige entre 4 fuentes",
     "hard": "5 preguntas — Elige entre 6 fuentes al azar",
-    "diabolical": "5 preguntas — Elige entre 8 fuentes al azar, con sorpresas"
+    "diabolical": "5 preguntas — Elige entre 8 fuentes al azar, con sorpresas",
+    "custom": "Elige qué fuentes y entre cuántas adivinar"
+  },
+  "custom": {
+    "title": "Crea tu propio juego",
+    "subtitle": "Elige qué fuentes y entre cuántas adivinar, luego juega {count} preguntas. Solo para practicar — sin clasificación.",
+    "how_many": "¿Entre cuántas fuentes adivinar?",
+    "pick_fonts": "Elige tus fuentes",
+    "select_font": "Elige una fuente…",
+    "start": "Empezar el juego",
+    "starting": "Barajando…",
+    "back": "← Volver al menú",
+    "duplicate_error": "Cada casilla necesita una fuente diferente.",
+    "review": "Desglose por pregunta",
+    "no_answer": "Sin respuesta",
+    "play_again": "Jugar otra vez (mismas fuentes)",
+    "change_fonts": "Elegir otras fuentes"
   },
   "countdown": {
     "label": "{difficulty}",

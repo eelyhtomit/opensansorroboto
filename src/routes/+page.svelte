@@ -3,6 +3,7 @@
 	import { theme } from '$lib/stores/themeStore';
 	import { locale, t } from 'svelte-i18n';
 	import DifficultySelector from '$lib/components/DifficultySelector.svelte';
+	import CustomConfigSelector from '$lib/components/CustomConfigSelector.svelte';
 	import Countdown from '$lib/components/Countdown.svelte';
 	import GameScreen from '$lib/components/GameScreen.svelte';
 	import AnswerButtons from '$lib/components/AnswerButtons.svelte';
@@ -40,7 +41,7 @@
 	}
 </script>
 
-{#if $game.phase === 'home' || $game.phase === 'difficulty'}
+{#if $game.phase === 'home' || $game.phase === 'difficulty' || $game.phase === 'custom_config'}
 <div class="bg-wrap bg-left" aria-hidden="true">
 	<div class="marquee-track marquee-up">
 		<span class="marquee-text">Open Sans or Roboto</span>
@@ -64,6 +65,9 @@
 
 		{#if $game.phase === 'home' || $game.phase === 'difficulty'}
 			<DifficultySelector />
+
+		{:else if $game.phase === 'custom_config'}
+			<CustomConfigSelector />
 
 		{:else if $game.phase === 'countdown'}
 			<Countdown />
@@ -213,7 +217,6 @@
 		justify-content: center;
 		gap: 1.5rem;
 		padding-top: 0.5rem;
-		border-top: 1px solid var(--border);
 	}
 
 	.progress {
@@ -283,3 +286,4 @@
 	}
 	.theme-toggle:hover { color: var(--fg-muted); }
 </style>
+

@@ -7,6 +7,8 @@ node_modules
 .wrangler
 /.svelte-kit
 /build
+# Generated at build time by netlify.toml (redirect stub for the Netlify→Cloudflare hand-off)
+/_netlify_publish
 
 # OS
 .DS_Store

@@ -6,19 +6,37 @@
     "easy": "かんたん",
     "medium": "ふつう",
     "hard": "むずかしい",
-    "diabolical": "地獄"
+    "diabolical": "地獄",
+    "custom": "カスタム"
   },
   "difficulty_short": {
     "easy": "かんたん",
     "medium": "ふつう",
     "hard": "むずかしい",
-    "diabolical": "地獄"
+    "diabolical": "地獄",
+    "custom": "自分だけのフォント当てゲームを作る"
   },
   "meta": {
     "easy": "10問 — Open Sans か Roboto か？",
     "medium": "10問 — 4種類のフォントから選ぶ",
     "hard": "5問 — ランダムな6種類のフォントから選ぶ",
-    "diabolical": "5問 — ランダムな8種類のフォントから選ぶ、サプライズあり"
+    "diabolical": "5問 — ランダムな8種類のフォントから選ぶ、サプライズあり",
+    "custom": "どのフォントを何種類から当てるか選ぶ"
+  },
+  "custom": {
+    "title": "自分だけのゲームを作る",
+    "subtitle": "どのフォントを何種類から当てるか選んで、{count}問プレイ。練習用なのでランキングはありません。",
+    "how_many": "いくつのフォントから当てる？",
+    "pick_fonts": "フォントを選ぶ",
+    "select_font": "フォントを選択…",
+    "start": "ゲーム開始",
+    "starting": "シャッフル中…",
+    "back": "← メニューに戻る",
+    "duplicate_error": "それぞれ違うフォントを選んでください。",
+    "review": "問題ごとの結果",
+    "no_answer": "未回答",
+    "play_again": "もう一度（同じフォント）",
+    "change_fonts": "別のフォントを選ぶ"
   },
   "countdown": {
     "label": "{difficulty}",

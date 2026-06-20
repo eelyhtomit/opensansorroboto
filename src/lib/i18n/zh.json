@@ -6,19 +6,37 @@
     "easy": "简单",
     "medium": "中等",
     "hard": "困难",
-    "diabolical": "地狱"
+    "diabolical": "地狱",
+    "custom": "自定义"
   },
   "difficulty_short": {
     "easy": "简单",
     "medium": "中等",
     "hard": "困难",
-    "diabolical": "地狱"
+    "diabolical": "地狱",
+    "custom": "或创建你自己的字体猜谜游戏"
   },
   "meta": {
     "easy": "10题 — Open Sans 还是 Roboto？",
     "medium": "10题 — 从4种字体中选择",
     "hard": "5题 — 从随机6种字体中选择",
-    "diabolical": "5题 — 从随机8种字体中选择，含惊喜"
+    "diabolical": "5题 — 从随机8种字体中选择，含惊喜",
+    "custom": "选择从哪些字体、几种字体中辨认"
+  },
+  "custom": {
+    "title": "创建你自己的游戏",
+    "subtitle": "选择从哪些字体、几种字体中辨认，然后进行{count}道题。仅供练习——不计入排行榜。",
+    "how_many": "从几种字体中辨认？",
+    "pick_fonts": "选择字体",
+    "select_font": "选择一种字体…",
+    "start": "开始游戏",
+    "starting": "正在洗牌…",
+    "back": "← 返回菜单",
+    "duplicate_error": "每个位置需要选择不同的字体。",
+    "review": "逐题回顾",
+    "no_answer": "未作答",
+    "play_again": "再玩一次（相同字体）",
+    "change_fonts": "选择其他字体"
   },
   "countdown": {
     "label": "{difficulty}",

@@ -6,19 +6,37 @@
     "easy": "Easy Peasy",
     "medium": "Medium Rare",
     "hard": "Hard Knocks",
-    "diabolical": "Diabolical"
+    "diabolical": "Diabolical",
+    "custom": "Or create your own font-guessing game"
   },
   "difficulty_short": {
     "easy": "Easy",
     "medium": "Medium",
     "hard": "Hard",
-    "diabolical": "Diabolical"
+    "diabolical": "Diabolical",
+    "custom": "Custom"
   },
   "meta": {
     "easy": "10 questions - Open Sans or Roboto?",
     "medium": "10 questions - Open Sans, Roboto, Arial, Montserrat",
     "hard": "5 questions - Guess from 6 fonts at random",
-    "diabolical": "5 questions - Guess from 8 fonts at random, with surprises"
+    "diabolical": "5 questions - Guess from 8 fonts at random, with surprises",
+    "custom": "Pick which fonts and how many to guess from"
+  },
+  "custom": {
+    "title": "Create your own game",
+    "subtitle": "Pick which fonts and how many to guess from, then play {count} questions. Just for practice — no leaderboard.",
+    "how_many": "How many fonts to guess between?",
+    "pick_fonts": "Pick your fonts",
+    "select_font": "Select a font…",
+    "start": "Start the game",
+    "starting": "Shuffling…",
+    "back": "← Back to menu",
+    "duplicate_error": "Each slot needs a different font.",
+    "review": "Question breakdown",
+    "no_answer": "No answer",
+    "play_again": "Play again (same fonts)",
+    "change_fonts": "Choose different fonts"
   },
   "countdown": {
     "label": "{difficulty}",

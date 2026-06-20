@@ -6,19 +6,37 @@
     "easy": "식은 죽 먹기",
     "medium": "적당히 어려움",
     "hard": "고난의 길",
-    "diabolical": "악마적 난이도"
+    "diabolical": "악마적 난이도",
+    "custom": "나만의 폰트 맞히기 게임 만들기"
   },
   "difficulty_short": {
     "easy": "쉬움",
     "medium": "보통",
     "hard": "어려움",
-    "diabolical": "악마"
+    "diabolical": "악마",
+    "custom": "커스텀"
   },
   "meta": {
     "easy": "10문제 - Open Sans 또는 Roboto?",
     "medium": "10문제 - Open Sans, Roboto, Arial, Montserrat",
     "hard": "5문제 - 6가지 폰트 중 랜덤 맞추기",
-    "diabolical": "5문제 - 8가지 폰트 중 랜덤 맞추기, 서프라이즈 포함"
+    "diabolical": "5문제 - 8가지 폰트 중 랜덤 맞추기, 서프라이즈 포함",
+    "custom": "어떤 폰트를 몇 개 중에서 맞힐지 고르기"
+  },
+  "custom": {
+    "title": "나만의 게임 만들기",
+    "subtitle": "어떤 폰트를 몇 개 중에서 맞힐지 고르고 {count}문제를 플레이하세요. 연습용이라 순위표는 없어요.",
+    "how_many": "몇 개의 폰트 중에서 맞출까요?",
+    "pick_fonts": "폰트 선택",
+    "select_font": "폰트를 선택하세요…",
+    "start": "게임 시작",
+    "starting": "섞는 중…",
+    "back": "← 메뉴로 돌아가기",
+    "duplicate_error": "각 칸에 서로 다른 폰트를 선택하세요.",
+    "review": "문제별 결과",
+    "no_answer": "미응답",
+    "play_again": "다시 하기 (같은 폰트)",
+    "change_fonts": "다른 폰트 선택"
   },
   "countdown": {
     "label": "{difficulty}",

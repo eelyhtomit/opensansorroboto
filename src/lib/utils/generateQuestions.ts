@@ -1,5 +1,12 @@
 import { supabase } from '$lib/supabase';
-import { FONTS, FONTS_RANDOM, DIFFICULTY_FONTS, DIFFICULTY_QUESTION_COUNT, randomFontSize } from '$lib/data/fonts';
+import {
+	FONTS,
+	FONTS_RANDOM,
+	DIFFICULTY_FONTS,
+	DIFFICULTY_QUESTION_COUNT,
+	CUSTOM_QUESTION_COUNT,
+	randomFontSize
+} from '$lib/data/fonts';
 import type { Difficulty, FontConfig } from '$lib/data/fonts';
 import type { Question } from '$lib/stores/gameStore';
 
@@ -102,6 +109,63 @@ export async function generateQuestions(difficulty: Difficulty): Promise<{ quest
 			fontSize: randomFontSize(difficulty),
 			...randomStyle(difficulty),
 			forcedTheme,
+			answered: false,
+			correct: null,
+			userAnswer: null
+		});
+	}
+
+	return { questions: shuffle(questions), fontPool };
+}
+
+// ---------------------------------------------------------------------------
+// Custom mode — player picks the exact font pool (2–4 fonts) and plays a fixed
+// number of questions. No leaderboard, no diabolical surprises; the only
+// variable is which fonts you must tell apart.
+// ---------------------------------------------------------------------------
+export async function generateCustomQuestions(
+	selectedFonts: FontConfig[]
+): Promise<{ questions: Question[]; fontPool: FontConfig[] }> {
+	if (!selectedFonts || selectedFonts.length < 2) {
+		throw new Error('Pick at least two fonts to play custom mode.');
+	}
+
+	// De-duplicate by font name in case the same font is selected twice.
+	const fontPool: FontConfig[] = [];
+	for (const f of selectedFonts) {
+		if (!fontPool.some((p) => p.name === f.name)) fontPool.push(f);
+	}
+	if (fontPool.length < 2) {
+		throw new Error('Pick at least two different fonts to play custom mode.');
+	}
+
+	const count = CUSTOM_QUESTION_COUNT;
+
+	const allPhrases = await fetchPhrases();
+	if (allPhrases.length < count) {
+		throw new Error('Not enough phrases in the database. Please seed the phrases table.');
+	}
+
+	const phrases = shuffle([...allPhrases]).slice(0, count);
+
+	// Guarantee every selected font appears at least once (up to pool size).
+	const guaranteed = shuffle([...fontPool]).slice(0, Math.min(fontPool.length, count));
+
+	const questions: Question[] = [];
+	for (let i = 0; i < count; i++) {
+		const font =
+			i < guaranteed.length
+				? guaranteed[i]
+				: fontPool[Math.floor(Math.random() * fontPool.length)];
+		questions.push({
+			phrase: phrases[i],
+			font,
+			fontSize: randomFontSize('custom'),
+			fontStyle: 'normal',
+			fontWeight: 'normal',
+			textTransform: 'none',
+			letterSpacing: 'normal',
+			forcedTheme: null,
 			answered: false,
 			correct: null,
 			userAnswer: null

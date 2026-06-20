@@ -1,7 +1,14 @@
 import { writable, derived } from 'svelte/store';
 import type { Difficulty, FontConfig } from '$lib/data/fonts';
 
-export type GamePhase = 'home' | 'difficulty' | 'countdown' | 'playing' | 'result' | 'leaderboard';
+export type GamePhase =
+	| 'home'
+	| 'difficulty'
+	| 'custom_config'
+	| 'countdown'
+	| 'playing'
+	| 'result'
+	| 'leaderboard';
 
 export interface Question {
 	phrase: string;
