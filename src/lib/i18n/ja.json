@@ -65,7 +65,19 @@
     "perfect_not_on_board": "完璧だったけど…名誉の壁はもっと速い完璧主義者たちで埋まってた。スコアは保存されたよ、惜しくも圏外。",
     "try_again": "もう一度挑戦",
     "leaderboard": "ランキング",
-    "change_difficulty": "難易度を変える"
+    "change_difficulty": "難易度を変える",
+    "leave_title": "もう離れますか？",
+    "leave_body": "パーフェクトを達成しましたが、まだランキングに名前を登録していません。名前を保存せずに離れますか？",
+    "leave_confirm": "離れる",
+    "leave_cancel": "残って登録する"
+  },
+  "share": {
+    "title": "自慢しよう",
+    "text": "「Open Sans か Roboto か？」を{time}で全問正解（10/10）したよ！フォントを見分けられる？挑戦してみて：",
+    "facebook": "Facebookでシェア",
+    "x": "Xでシェア",
+    "copy": "リンクをコピー",
+    "copied": "コピーしました ✓"
   },
   "leaderboard": {
     "title": "ランキング",

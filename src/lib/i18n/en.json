@@ -65,7 +65,19 @@
     "perfect_not_on_board": "Flawless — but the Wall of Fame is already packed with faster perfectionists. Your score was saved, just off the podium for now.",
     "try_again": "Run it again",
     "leaderboard": "Wall of Fame",
-    "change_difficulty": "Too easy? Too hard?"
+    "change_difficulty": "Too easy? Too hard?",
+    "leave_title": "Leaving so soon?",
+    "leave_body": "You nailed a perfect run but haven't claimed your spot on the Wall of Fame yet. Leave without saving your name?",
+    "leave_confirm": "Leave anyway",
+    "leave_cancel": "Stay and save"
+  },
+  "share": {
+    "title": "Brag about it",
+    "text": "I just got a flawless 10/10 in {time} on Open Sans or Roboto? Think you can tell the fonts apart? Play here:",
+    "facebook": "Share on Facebook",
+    "x": "Share on X",
+    "copy": "Copy link",
+    "copied": "Copied ✓"
   },
   "leaderboard": {
     "title": "Leaderboard",

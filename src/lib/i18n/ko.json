@@ -65,7 +65,19 @@
     "perfect_not_on_board": "완벽해요 — 하지만 명예의 전당은 이미 더 빠른 완벽주의자들로 가득 차 있어요. 점수는 저장됐지만, 지금은 아쉽게도 순위권 밖이에요.",
     "try_again": "다시 도전",
     "leaderboard": "명예의 전당",
-    "change_difficulty": "너무 쉬운가요? 너무 어렵나요?"
+    "change_difficulty": "너무 쉬운가요? 너무 어렵나요?",
+    "leave_title": "벌써 나가시나요?",
+    "leave_body": "완벽한 기록을 세웠지만 아직 명예의 전당에 이름을 올리지 않았어요. 이름을 저장하지 않고 나가시겠어요?",
+    "leave_confirm": "그냥 나가기",
+    "leave_cancel": "남아서 저장하기"
+  },
+  "share": {
+    "title": "자랑하기",
+    "text": "「Open Sans 아니면 Roboto?」를 {time}에 10/10 만점으로 클리어했어요! 폰트를 구분할 수 있나요? 여기서 플레이하세요:",
+    "facebook": "Facebook에 공유",
+    "x": "X에 공유",
+    "copy": "링크 복사",
+    "copied": "복사됨 ✓"
   },
   "leaderboard": {
     "title": "순위표",

@@ -34,6 +34,9 @@ export interface GameState {
 	endTime: number | null;
 	timerMs: number;
 	highlightName: string | null;
+	// The exact id of the leaderboard row the player just created. Used to
+	// highlight precisely their game — name/time alone can be ambiguous.
+	highlightId: string | null;
 }
 
 const initialState: GameState = {
@@ -45,7 +48,8 @@ const initialState: GameState = {
 	startTime: null,
 	endTime: null,
 	timerMs: 0,
-	highlightName: null
+	highlightName: null,
+	highlightId: null
 };
 
 function createGameStore() {
@@ -85,7 +89,8 @@ function createGameStore() {
 				startTime: null,
 				endTime: null,
 				timerMs: 0,
-				highlightName: null
+				highlightName: null,
+				highlightId: null
 			});
 		},
 
@@ -133,9 +138,14 @@ function createGameStore() {
 			update((s) => ({ ...s, phase }));
 		},
 
-		goToLeaderboardHighlighting(name: string) {
+		goToLeaderboardHighlighting(name: string, id: string | null = null) {
 			stopTimer();
-			update((s) => ({ ...s, phase: 'leaderboard', highlightName: name }));
+			update((s) => ({
+				...s,
+				phase: 'leaderboard',
+				highlightName: name,
+				highlightId: id
+			}));
 		},
 
 		reset() {

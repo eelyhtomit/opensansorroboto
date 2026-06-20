@@ -65,7 +65,19 @@
     "perfect_not_on_board": "Parfait — mais le Mur de la Gloire est déjà rempli de perfectionnistes plus rapides. Ton score est bien enregistré, juste hors du podium pour l'instant.",
     "try_again": "Réessayer",
     "leaderboard": "Classement",
-    "change_difficulty": "Changer de difficulté"
+    "change_difficulty": "Changer de difficulté",
+    "leave_title": "Déjà parti ?",
+    "leave_body": "Tu as réussi une partie parfaite mais tu n'as pas encore réclamé ta place au classement. Partir sans enregistrer ton nom ?",
+    "leave_confirm": "Partir quand même",
+    "leave_cancel": "Rester et enregistrer"
+  },
+  "share": {
+    "title": "Frime un peu",
+    "text": "J'ai fait un 10/10 parfait en {time} sur Open Sans ou Roboto ? Tu penses savoir distinguer les polices ? Joue ici :",
+    "facebook": "Partager sur Facebook",
+    "x": "Partager sur X",
+    "copy": "Copier le lien",
+    "copied": "Copié ✓"
   },
   "leaderboard": {
     "title": "Classement",

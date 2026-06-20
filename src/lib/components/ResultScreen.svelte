@@ -16,20 +16,68 @@
 	let notOnBoard = $state(false);
 	let replaying = $state(false);
 
+	// ---- Leave-confirmation guard -------------------------------------------
+	// True when the player aced the run but hasn't saved their name yet, so
+	// leaving would forfeit their leaderboard spot.
+	const unsavedPerfect = $derived($isPerfect && !isCustom && !submitted && !notOnBoard);
+
+	let leaveDialog = $state<HTMLDialogElement | null>(null);
+	// The navigation to run if the player confirms they want to leave.
+	let pendingLeave: (() => void) | null = $state(null);
+
+	// Route a leave action through the confirmation dialog when there's an
+	// unsaved perfect score; otherwise just perform it.
+	function guardedLeave(action: () => void) {
+		if (unsavedPerfect) {
+			pendingLeave = action;
+			leaveDialog?.showModal();
+		} else {
+			action();
+		}
+	}
+
+	function confirmLeave() {
+		// Capture before close(): closing fires `onclose`, which clears pendingLeave.
+		const action = pendingLeave;
+		pendingLeave = null;
+		leaveDialog?.close();
+		action?.();
+	}
+
+	function cancelLeave() {
+		pendingLeave = null;
+		leaveDialog?.close();
+	}
+
+	// Warn on browser-level navigation (tab close / refresh) while unsaved.
+	function handleBeforeUnload(e: BeforeUnloadEvent) {
+		if (unsavedPerfect) {
+			e.preventDefault();
+			// Legacy requirement for the native prompt to appear in some browsers.
+			e.returnValue = '';
+		}
+	}
+
 	// Fire-and-forget: record every completed game play (skip for custom mode)
 	onMount(() => {
-		if ($game.difficulty === 'custom') return;
-		fetch('/api/track-play', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({
-				difficulty: $game.difficulty,
-				score: $score,
-				time_ms: $game.timerMs
-			})
-		}).catch(() => {
-			// non-critical — ignore failures silently
-		});
+		// Guard browser-level navigation away from an unsaved perfect score.
+		window.addEventListener('beforeunload', handleBeforeUnload);
+
+		if ($game.difficulty !== 'custom') {
+			fetch('/api/track-play', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					difficulty: $game.difficulty,
+					score: $score,
+					time_ms: $game.timerMs
+				})
+			}).catch(() => {
+				// non-critical — ignore failures silently
+			});
+		}
+
+		return () => window.removeEventListener('beforeunload', handleBeforeUnload);
 	});
 
 	function formatTime(ms: number): string {
@@ -77,8 +125,8 @@
 			localStorage.setItem('osrr_name', name.trim());
 			if (email.trim()) localStorage.setItem('osrr_email', email.trim());
 			if (data.onBoard) {
-				// Navigate straight to leaderboard with the name highlighted
-				game.goToLeaderboardHighlighting(name.trim());
+				// Navigate straight to leaderboard with this exact row highlighted
+				game.goToLeaderboardHighlighting(name.trim(), data.id ?? null);
 			} else {
 				// Score saved but outside the leaderboard window
 				submitted = true;
@@ -162,12 +210,22 @@
 		{/if}
 
 		<div class="result-actions">
-			<button class="action-btn primary" onclick={tryAgain} disabled={replaying}>{$t('result.try_again')}</button>
-			<button class="action-btn" onclick={() => game.goTo('leaderboard')}>{$t('result.leaderboard')}</button>
-			<button class="action-btn" onclick={() => game.goTo('home')}>{$t('result.change_difficulty')}</button>
+			<button class="action-btn primary" onclick={() => guardedLeave(tryAgain)} disabled={replaying}>{$t('result.try_again')}</button>
+			<button class="action-btn" onclick={() => guardedLeave(() => game.goTo('leaderboard'))}>{$t('result.leaderboard')}</button>
+			<button class="action-btn" onclick={() => guardedLeave(() => game.goTo('home'))}>{$t('result.change_difficulty')}</button>
 		</div>
 	{/if}
 </div>
+
+<!-- Confirmation shown when leaving an unsaved perfect score. -->
+<dialog bind:this={leaveDialog} class="leave-dialog" onclose={cancelLeave}>
+	<h3 class="leave-title">{$t('result.leave_title')}</h3>
+	<p class="leave-body">{$t('result.leave_body')}</p>
+	<div class="leave-actions">
+		<button class="action-btn primary" onclick={cancelLeave}>{$t('result.leave_cancel')}</button>
+		<button class="action-btn" onclick={confirmLeave}>{$t('result.leave_confirm')}</button>
+	</div>
+</dialog>
 
 <style>
 	.result-screen {
@@ -245,4 +303,36 @@
 	.action-btn:hover { background: var(--surface-hover); }
 	.action-btn.primary { background: var(--fg); color: var(--bg); border-color: var(--fg); }
 	.action-btn.primary:hover { opacity: 0.85; }
+
+	/* Leave-confirmation dialog */
+	.leave-dialog {
+		border: 1px solid var(--border);
+		background: var(--bg);
+		color: var(--fg);
+		padding: 1.75rem;
+		max-width: 360px;
+		width: calc(100% - 2rem);
+		box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+	}
+	.leave-dialog::backdrop {
+		background: rgba(0, 0, 0, 0.5);
+	}
+
+	.leave-title {
+		font-size: 1.1rem;
+		font-weight: 600;
+		margin: 0 0 0.6rem;
+		color: var(--fg);
+	}
+	.leave-body {
+		font-size: 0.9rem;
+		line-height: 1.5;
+		color: var(--fg-muted);
+		margin: 0 0 1.5rem;
+	}
+	.leave-actions {
+		display: flex;
+		flex-direction: column;
+		gap: 0.6rem;
+	}
 </style>

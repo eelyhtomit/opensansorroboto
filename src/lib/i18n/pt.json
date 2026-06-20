@@ -1,4 +1,4 @@
-{
+ {
   "title": "Open Sans ou Roboto?",
   "subtitle": "Acha que tem um olho mais apurado que o designer médio?<br>Veja se consegue identificar essas fontes corretamente.",
   "view_leaderboard": "Ver classificação →",
@@ -65,7 +65,19 @@
     "perfect_not_on_board": "Perfeito — mas o Mural da Fama já está cheio de perfeccionistas mais rápidos. Sua pontuação foi salva, só ficou fora do pódio por ora.",
     "try_again": "Tentar novamente",
     "leaderboard": "Classificação",
-    "change_difficulty": "Mudar dificuldade"
+    "change_difficulty": "Mudar dificuldade",
+    "leave_title": "Já vai sair?",
+    "leave_body": "Você fez uma partida perfeita, mas ainda não garantiu seu lugar na classificação. Sair sem salvar seu nome?",
+    "leave_confirm": "Sair mesmo assim",
+    "leave_cancel": "Ficar e salvar"
+  },
+  "share": {
+    "title": "Gabe-se",
+    "text": "Fiz um 10/10 perfeito em {time} no Open Sans ou Roboto? Acha que distingue as fontes? Jogue aqui:",
+    "facebook": "Compartilhar no Facebook",
+    "x": "Compartilhar no X",
+    "copy": "Copiar link",
+    "copied": "Copiado ✓"
   },
   "leaderboard": {
     "title": "Classificação",

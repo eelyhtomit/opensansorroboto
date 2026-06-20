@@ -65,7 +65,19 @@
     "perfect_not_on_board": "Perfecto — pero el Salón de la Fama ya está lleno de perfeccionistas más rápidos. Tu puntuación quedó guardada, solo fuera del podio por ahora.",
     "try_again": "Intentarlo de nuevo",
     "leaderboard": "Clasificación",
-    "change_difficulty": "Cambiar dificultad"
+    "change_difficulty": "Cambiar dificultad",
+    "leave_title": "¿Te vas tan pronto?",
+    "leave_body": "Lograste una partida perfecta pero aún no has reclamado tu lugar en la clasificación. ¿Salir sin guardar tu nombre?",
+    "leave_confirm": "Salir igualmente",
+    "leave_cancel": "Quedarme y guardar"
+  },
+  "share": {
+    "title": "Presume de ello",
+    "text": "¡Hice un 10/10 perfecto en {time} en ¿Open Sans o Roboto?! ¿Crees que distingues las fuentes? Juega aquí:",
+    "facebook": "Compartir en Facebook",
+    "x": "Compartir en X",
+    "copy": "Copiar enlace",
+    "copied": "Copiado ✓"
   },
   "leaderboard": {
     "title": "Clasificación",

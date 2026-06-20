@@ -65,7 +65,19 @@
     "perfect_not_on_board": "完美无缺——但排行榜已被更快的完美主义者占满了。你的成绩已保存，只是暂时排在榜外。",
     "try_again": "再试一次",
     "leaderboard": "排行榜",
-    "change_difficulty": "更换难度"
+    "change_difficulty": "更换难度",
+    "leave_title": "这么快就走？",
+    "leave_body": "你刚刚拿到了满分，但还没把名字留在排行榜上。要不保存名字就离开吗？",
+    "leave_confirm": "仍要离开",
+    "leave_cancel": "留下并保存"
+  },
+  "share": {
+    "title": "炫耀一下",
+    "text": "我在《Open Sans 还是 Roboto？》中用时{time}拿到了满分10/10！你能分辨这些字体吗？来玩玩看：",
+    "facebook": "分享到 Facebook",
+    "x": "分享到 X",
+    "copy": "复制链接",
+    "copied": "已复制 ✓"
   },
   "leaderboard": {
     "title": "排行榜",

@@ -98,12 +98,16 @@ export const POST: RequestHandler = async ({ request }) => {
 	// ------------------------------------------------------------------
 	// 2. Insert new score
 	// ------------------------------------------------------------------
-	const { error: insertError } = await supabase.from('leaderboard').insert({
-		name: cleanName,
-		email: cleanEmail,
-		time_ms,
-		difficulty
-	});
+	const { data: inserted, error: insertError } = await supabase
+		.from('leaderboard')
+		.insert({
+			name: cleanName,
+			email: cleanEmail,
+			time_ms,
+			difficulty
+		})
+		.select('id')
+		.single();
 
 	if (insertError) {
 		console.error('Leaderboard insert error:', insertError);
@@ -130,15 +134,30 @@ export const POST: RequestHandler = async ({ request }) => {
 	// 3. Notify beaten players (fire-and-forget, don't block the response)
 	// ------------------------------------------------------------------
 	if (beaten && beaten.length > 0) {
-		const eligibleRows = beaten.filter((row) => row.email);
+		// A single player can hold several beaten rows (e.g. multiple saved games
+		// with the same email). Group those rows by email so each address gets at
+		// most ONE notification per new score, then mark ALL of that address's
+		// beaten rows as notified.
+		const rowsByEmail = new Map<string, { displayEmail: string; ids: string[] }>();
+		for (const row of beaten) {
+			if (!row.email) continue;
+			// Normalize the key so case variants of the same address collapse together.
+			const key = (row.email as string).trim().toLowerCase();
+			const group = rowsByEmail.get(key);
+			if (group) {
+				group.ids.push(row.id);
+			} else {
+				rowsByEmail.set(key, { displayEmail: row.email as string, ids: [row.id] });
+			}
+		}
 
-		// Send notifications and mark each row as notified in one pass
+		// Send one notification per unique email and mark its rows as notified.
 		await Promise.allSettled(
-			eligibleRows.map(async (row) => {
+			Array.from(rowsByEmail.values()).map(async ({ displayEmail, ids }) => {
 				const result = await resend.emails.send({
 					from: 'Open Sans or Roboto? <montserrat@opensansorroboto.com>',
 					replyTo: 'montserrat@opensansorroboto.com',
-					to: row.email as string,
+					to: displayEmail,
 					subject: safeSubject,
 					html: `
 <div style="font-family:system-ui,sans-serif;max-width:480px;margin:0 auto;padding:2rem;color:#111">
@@ -158,16 +177,17 @@ export const POST: RequestHandler = async ({ request }) => {
 </div>`
 				});
 
-				// Only mark as notified if the email was sent successfully
+				// Only mark as notified if the email was sent successfully. Mark every
+				// beaten row for this address so none of them re-triggers next time.
 				if (!result.error) {
 					await supabase
 						.from('leaderboard')
 						.update({ notified_at: new Date().toISOString() })
-						.eq('id', row.id);
+						.in('id', ids);
 				}
 			})
 		);
 	}
 
-	return json({ ok: true, onBoard, rank });
+	return json({ ok: true, onBoard, rank, id: inserted?.id ?? null });
 };
