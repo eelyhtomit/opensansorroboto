@@ -37,6 +37,11 @@ export interface GameState {
 	// The exact id of the leaderboard row the player just created. Used to
 	// highlight precisely their game — name/time alone can be ambiguous.
 	highlightId: string | null;
+	// Shareable custom game: the token of the custom_games row this run belongs
+	// to (null for regular difficulties and local-only custom practice).
+	shareToken: string | null;
+	// Optional display name of whoever created the shared custom game.
+	creatorName: string | null;
 }
 
 const initialState: GameState = {
@@ -49,7 +54,9 @@ const initialState: GameState = {
 	endTime: null,
 	timerMs: 0,
 	highlightName: null,
-	highlightId: null
+	highlightId: null,
+	shareToken: null,
+	creatorName: null
 };
 
 function createGameStore() {
@@ -78,8 +85,16 @@ function createGameStore() {
 			update((s) => ({ ...s, difficulty }));
 		},
 
-		// Called after questions are fetched — goes to countdown phase first
-		startGameWithDifficulty(questions: Question[], difficulty: Difficulty, fontPool: FontConfig[]) {
+		// Called after questions are fetched — goes to countdown phase first.
+		// For shareable custom games, pass the token (and optional creator name)
+		// so the run stays bound to that game's per-token leaderboard.
+		startGameWithDifficulty(
+			questions: Question[],
+			difficulty: Difficulty,
+			fontPool: FontConfig[],
+			shareToken: string | null = null,
+			creatorName: string | null = null
+		) {
 			set({
 				phase: 'countdown',
 				difficulty,
@@ -90,7 +105,9 @@ function createGameStore() {
 				endTime: null,
 				timerMs: 0,
 				highlightName: null,
-				highlightId: null
+				highlightId: null,
+				shareToken,
+				creatorName
 			});
 		},
 
@@ -146,6 +163,29 @@ function createGameStore() {
 				highlightName: name,
 				highlightId: id
 			}));
+		},
+
+		// Set / clear the shareable-custom-game token without altering phase.
+		setShareToken(shareToken: string | null, creatorName: string | null = null) {
+			update((s) => ({ ...s, shareToken, creatorName }));
+		},
+
+		// Hydrate the store for a shared custom game's LANDING page (no run yet):
+		// makes the token, creator and font pool available (e.g. so the per-token
+		// leaderboard can render) while keeping the player on a pre-game phase.
+		hydrateCustomGame(
+			fontPool: FontConfig[],
+			shareToken: string,
+			creatorName: string | null = null
+		) {
+			stopTimer();
+			set({
+				...initialState,
+				difficulty: 'custom',
+				fontPool,
+				shareToken,
+				creatorName
+			});
 		},
 
 		reset() {

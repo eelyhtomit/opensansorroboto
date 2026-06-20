@@ -38,6 +38,32 @@
     "play_again": "Play again (same fonts)",
     "change_fonts": "Choose different fonts"
   },
+  "custom_share": {
+    "creator_name_label": "Your name (for the leaderboard)",
+    "creator_name_placeholder": "Your name (optional)",
+    "create_and_play": "Create shareable game",
+    "creating": "Creating…",
+    "practice_solo": "Or just practise solo",
+    "create_error": "Couldn't create the game. Try again.",
+    "copy_link": "Copy share link",
+    "not_found_title": "Game not found",
+    "not_found_body": "This custom game link is invalid or has expired. Why not create your own?",
+    "landing_title": "You've been challenged!",
+    "page_title": "Try This Font-Guessing Game between {fonts}",
+    "create_your_own": "Create your own game",
+    "exit": "Exit game",
+    "enter_name": "Add your name to this game's leaderboard",
+    "challenge_from": "{name} challenged you to this game"
+  },
+  "custom_leaderboard": {
+    "title": "This game's leaderboard",
+    "by": "Created by {name}",
+    "guess_between": "10 questions guessing between {fonts}",
+    "play_this_game": "Play this game",
+    "view": "View this game's leaderboard",
+    "empty": "No scores yet. Be the first to set a time!",
+    "error": "Failed to load this game's leaderboard."
+  },
   "countdown": {
     "label": "{difficulty}",
     "sub": "Get ready…",
@@ -82,6 +108,7 @@
   "leaderboard": {
     "title": "Leaderboard",
     "back": "← Back",
+    "back_to_menu": "← Back to Menu",
     "loading": "Loading…",
     "empty": "No perfect scores yet. Be the first!",
     "error": "Failed to load leaderboard."

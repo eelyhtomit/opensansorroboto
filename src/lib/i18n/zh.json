@@ -38,6 +38,32 @@
     "play_again": "再玩一次（相同字体）",
     "change_fonts": "选择其他字体"
   },
+  "custom_share": {
+    "creator_name_label": "你的名字（用于排行榜）",
+    "creator_name_placeholder": "你的名字（可选）",
+    "create_and_play": "创建可分享的游戏",
+    "creating": "创建中…",
+    "practice_solo": "或只是自己练习",
+    "create_error": "无法创建游戏，请重试。",
+    "copy_link": "复制分享链接",
+    "not_found_title": "找不到游戏",
+    "not_found_body": "此自定义游戏链接无效或已过期。何不创建你自己的游戏？",
+    "landing_title": "有人向你发起挑战！",
+    "page_title": "来玩这个字体辨认游戏：{fonts}",
+    "create_your_own": "创建你自己的游戏",
+    "exit": "退出游戏",
+    "enter_name": "把你的名字加入这个游戏的排行榜",
+    "challenge_from": "{name} 向你发起了这个游戏的挑战"
+  },
+  "custom_leaderboard": {
+    "title": "本游戏排行榜",
+    "by": "创建者：{name}",
+    "guess_between": "10 道题，辨认字体：{fonts}",
+    "play_this_game": "玩这个游戏",
+    "view": "查看本游戏排行榜",
+    "empty": "还没有成绩，来创造第一个纪录吧！",
+    "error": "本游戏排行榜加载失败。"
+  },
   "countdown": {
     "label": "{difficulty}",
     "sub": "准备好了吗…",
@@ -82,6 +108,7 @@
   "leaderboard": {
     "title": "排行榜",
     "back": "← 返回",
+    "back_to_menu": "← 返回主菜单",
     "loading": "加载中…",
     "empty": "还没有完美成绩，成为第一个吧！",
     "error": "排行榜加载失败。"

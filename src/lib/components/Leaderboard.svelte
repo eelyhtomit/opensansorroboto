@@ -287,7 +287,6 @@
 
 	.entry-name { font-weight: 500; color: var(--fg); }
 	.entry-time { font-variant-numeric: tabular-nums; font-size: 0.82rem; color: var(--fg-muted); }
-	.entry-date { font-size: 0.75rem; color: var(--fg-subtle); }
 
 	/* Share row — only shown inside the highlighted (current player) entry */
 	.share {

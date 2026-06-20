@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { game } from '$lib/stores/gameStore';
 	import {
 		FONTS,
@@ -7,7 +8,6 @@
 		CUSTOM_QUESTION_COUNT,
 		type FontConfig
 	} from '$lib/data/fonts';
-	import { generateCustomQuestions } from '$lib/utils/generateQuestions';
 	import { t } from 'svelte-i18n';
 
 	// Step 1: how many fonts to guess between (2–4). Null until the player picks.
@@ -63,20 +63,37 @@
 		errorMsg = '';
 	}
 
-	async function start() {
+	// Resolve the chosen slot values into canonical FontConfig objects.
+	function selectedPool(): FontConfig[] {
+		return active
+			.filter((v): v is string => v !== null)
+			.map((name) => FONTS.find((f) => f.name === name))
+			.filter((f): f is FontConfig => Boolean(f));
+	}
+
+	// Create a shareable game with its own per-token leaderboard, then navigate
+	// to /play/[token] so the creator plays it and the link is shareable. Names
+	// are collected only after a perfect run (like the preset difficulties), so
+	// nothing is captured here at creation time.
+	async function createSharedGame() {
 		if (fontCount === null || !allChosen || hasDuplicates) return;
 		loading = true;
 		errorMsg = '';
 		try {
-			const pool = active
-				.filter((v): v is string => v !== null)
-				.map((name) => FONTS.find((f) => f.name === name))
-				.filter((f): f is FontConfig => Boolean(f));
-			const { questions, fontPool } = await generateCustomQuestions(pool);
-			game.startGameWithDifficulty(questions, 'custom', fontPool);
+			const fonts = selectedPool().map((f) => f.name);
+			const res = await fetch('/api/custom-game', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ fonts })
+			});
+			if (!res.ok) throw new Error('server error');
+			const data = await res.json();
+			if (!data.token) throw new Error('server error');
+			await goto(`/play/${data.token}`);
 		} catch (e: unknown) {
-			errorMsg = e instanceof Error ? e.message : 'Failed to start game.';
-		} finally {
+			errorMsg = e instanceof Error && e.message !== 'server error'
+				? e.message
+				: $t('custom_share.create_error');
 			loading = false;
 		}
 	}
@@ -135,8 +152,8 @@
 		<p class="error">{errorMsg}</p>
 	{/if}
 
-	{#if allChosen}
-		<button class="start-btn" disabled={loading || hasDuplicates} onclick={start}>
+	{#if allChosen && !hasDuplicates}
+		<button class="start-btn" disabled={loading} onclick={createSharedGame}>
 			{loading ? $t('custom.starting') : $t('custom.start')}
 		</button>
 	{/if}

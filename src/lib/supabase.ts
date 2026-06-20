@@ -28,3 +28,21 @@ export interface GamePlay {
 	completed: boolean;
 	created_at: string;
 }
+
+export interface CustomGame {
+	token: string;
+	fonts: string[];
+	font_count: number;
+	creator_name: string | null;
+	created_at: string;
+}
+
+export interface CustomGameScore {
+	id: string;
+	token: string;
+	name: string;
+	email: string | null;
+	score: number;
+	time_ms: number;
+	created_at: string;
+}

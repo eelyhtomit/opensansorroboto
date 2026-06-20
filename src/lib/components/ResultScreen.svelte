@@ -1,11 +1,24 @@
 <script lang="ts">
 	import { game, isPerfect, score } from '$lib/stores/gameStore';
 	import { generateQuestions, generateCustomQuestions } from '$lib/utils/generateQuestions';
+	import { goto } from '$app/navigation';
 	import { t } from 'svelte-i18n';
 	import { onMount } from 'svelte';
 
+	// Reset the persistent game store and jump straight to the custom-game
+	// settings (font picker). Reset clears any stale phase/token; switching to
+	// the custom-config phase makes the home route open on settings on arrival.
+	async function createYourOwn() {
+		game.reset();
+		game.goTo('custom_config');
+		await goto('/');
+	}
+
 	// Custom mode is a practice playground — no leaderboard, no score tracking.
 	const isCustom = $derived($game.difficulty === 'custom');
+	// A *shared* custom game came from a /play/[token] link and DOES have a
+	// per-token leaderboard. Local-only custom practice (no token) does not.
+	const isShared = $derived(isCustom && $game.shareToken !== null);
 
 	// Pre-fill from previous session
 	let name = $state(localStorage.getItem('osrr_name') ?? '');
@@ -15,6 +28,67 @@
 	let submitError = $state('');
 	let notOnBoard = $state(false);
 	let replaying = $state(false);
+
+	// Shared-custom-game state
+	let sharedSubmitting = $state(false);
+	let sharedSubmitError = $state('');
+	let sharedCopied = $state(false);
+
+	function shareUrl(): string {
+		const token = $game.shareToken;
+		if (!token) return '';
+		const origin =
+			typeof window !== 'undefined' ? window.location.origin : 'https://opensansorroboto.com';
+		return `${origin}/play/${token}`;
+	}
+
+	async function copyShareLink() {
+		const url = shareUrl();
+		if (!url) return;
+		try {
+			await navigator.clipboard.writeText(url);
+		} catch {
+			const ta = document.createElement('textarea');
+			ta.value = url;
+			ta.style.position = 'fixed';
+			ta.style.opacity = '0';
+			document.body.appendChild(ta);
+			ta.select();
+			document.execCommand('copy');
+			document.body.removeChild(ta);
+		}
+		sharedCopied = true;
+		setTimeout(() => (sharedCopied = false), 2000);
+	}
+
+	async function submitSharedScore() {
+		const token = $game.shareToken;
+		if (!token || !name.trim()) return;
+		sharedSubmitting = true;
+		sharedSubmitError = '';
+		try {
+			const res = await fetch(`/api/custom-game/${token}/score`, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					name: name.trim(),
+					email: email.trim() || undefined,
+					score: $score,
+					time_ms: $game.timerMs
+				})
+			});
+			if (!res.ok) throw new Error('server error');
+			const data = await res.json();
+			localStorage.setItem('osrr_name', name.trim());
+			if (email.trim()) localStorage.setItem('osrr_email', email.trim());
+			// Jump to this game's leaderboard with the player's row highlighted.
+			game.goToLeaderboardHighlighting(name.trim(), data.id ?? null);
+		} catch {
+			sharedSubmitError = $t('result.save_error');
+		} finally {
+			sharedSubmitting = false;
+		}
+	}
 
 	// ---- Leave-confirmation guard -------------------------------------------
 	// True when the player aced the run but hasn't saved their name yet, so
@@ -91,8 +165,16 @@
 		try {
 			if (isCustom) {
 				// Reuse the same font pool the player configured for this session.
+				// For shared games, keep the token bound so a replay's score lands
+				// on the same per-token leaderboard.
 				const { questions, fontPool } = await generateCustomQuestions($game.fontPool);
-				game.startGameWithDifficulty(questions, 'custom', fontPool);
+				game.startGameWithDifficulty(
+					questions,
+					'custom',
+					fontPool,
+					$game.shareToken,
+					$game.creatorName
+				);
 			} else {
 				const { questions, fontPool } = await generateQuestions($game.difficulty);
 				game.startGameWithDifficulty(questions, $game.difficulty, fontPool);
@@ -144,7 +226,57 @@
 	<p class="your-score-label">{$t('result.your_score')}</p>
 	<p class="score-label">{$score}/{$game.questions.length}</p>
 
-	{#if isCustom}
+	{#if isShared}
+		<p class="time-label">{formatTime($game.timerMs)}</p>
+
+		{#if $game.creatorName}
+			<p class="shared-creator">{$t('custom_share.challenge_from', { values: { name: $game.creatorName } })}</p>
+		{/if}
+
+		<!-- Only a flawless run earns a spot on this game's leaderboard. -->
+		{#if $isPerfect}
+			<p class="perfect-label">{$t('result.perfect')}</p>
+			<div class="name-entry">
+				<p class="enter-name-label">{$t('custom_share.enter_name')}</p>
+				<div class="name-row">
+					<input
+						type="text"
+						placeholder={$t('result.name_placeholder')}
+						maxlength="32"
+						bind:value={name}
+						onkeydown={(e) => e.key === 'Enter' && submitSharedScore()}
+					/>
+					<button class="submit-btn" onclick={submitSharedScore} disabled={sharedSubmitting || !name.trim()}>
+						{sharedSubmitting ? $t('result.saving') : $t('result.save')}
+					</button>
+				</div>
+				<div class="email-row">
+					<input
+						type="email"
+						placeholder={$t('result.email_placeholder')}
+						maxlength="254"
+						bind:value={email}
+						onkeydown={(e) => e.key === 'Enter' && submitSharedScore()}
+					/>
+					<p class="email-hint">{$t('result.email_hint')}</p>
+				</div>
+				{#if sharedSubmitError}<p class="error">{sharedSubmitError}</p>{/if}
+			</div>
+		{/if}
+
+		<div class="result-actions">
+			<button class="action-btn primary" onclick={tryAgain} disabled={replaying}>
+				{replaying ? $t('custom.starting') : $t('custom.play_again')}
+			</button>
+			<button class="action-btn" onclick={() => game.goTo('leaderboard')}>
+				{$t('custom_leaderboard.view')}
+			</button>
+			<button class="action-btn" onclick={copyShareLink}>
+				{sharedCopied ? $t('share.copied') : $t('custom_share.copy_link')}
+			</button>
+			<button class="action-btn" onclick={createYourOwn}>{$t('custom_share.create_your_own')}</button>
+		</div>
+	{:else if isCustom}
 		<p class="time-label">{formatTime($game.timerMs)}</p>
 
 		<div class="result-actions">
@@ -284,7 +416,6 @@
 
 	.submit-btn { padding: 0.6rem 1rem; background: var(--fg); color: var(--bg); border: none; font-size: 0.9rem; cursor: pointer; white-space: nowrap; }
 	.submit-btn:disabled { opacity: 0.3; cursor: default; }
-	.saved-msg { font-size: 0.9rem; color: var(--fg-muted); margin: 0; }
 	.error { font-size: 0.8rem; color: var(--fg); margin: 0; }
 
 	.result-actions { display: flex; flex-direction: column; gap: 0.6rem; width: 100%; max-width: 340px; }
@@ -303,6 +434,17 @@
 	.action-btn:hover { background: var(--surface-hover); }
 	.action-btn.primary { background: var(--fg); color: var(--bg); border-color: var(--fg); }
 	.action-btn.primary:hover { opacity: 0.85; }
+	/* An <a> styled as an action button (e.g. "Create your own game"). */
+	a.action-btn { display: block; text-decoration: none; box-sizing: border-box; }
+
+	.shared-creator {
+		font-size: 0.9rem;
+		color: var(--fg-muted);
+		margin: 0;
+		max-width: 340px;
+		text-align: center;
+		line-height: 1.5;
+	}
 
 	/* Leave-confirmation dialog */
 	.leave-dialog {

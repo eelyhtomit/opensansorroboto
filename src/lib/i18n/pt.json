@@ -38,6 +38,32 @@
     "play_again": "Jogar de novo (mesmas fontes)",
     "change_fonts": "Escolher outras fontes"
   },
+  "custom_share": {
+    "creator_name_label": "Seu nome (para a classificação)",
+    "creator_name_placeholder": "Seu nome (opcional)",
+    "create_and_play": "Criar jogo para compartilhar",
+    "creating": "Criando…",
+    "practice_solo": "Ou apenas praticar sozinho",
+    "create_error": "Não foi possível criar o jogo. Tente novamente.",
+    "copy_link": "Copiar link de compartilhamento",
+    "not_found_title": "Jogo não encontrado",
+    "not_found_body": "Este link de jogo personalizado é inválido ou expirou. Que tal criar o seu próprio?",
+    "landing_title": "Você foi desafiado!",
+    "page_title": "Experimente este jogo de adivinhar fontes entre {fonts}",
+    "create_your_own": "Crie seu próprio jogo",
+    "exit": "Sair do jogo",
+    "enter_name": "Adicione seu nome à classificação deste jogo",
+    "challenge_from": "{name} desafiou você neste jogo"
+  },
+  "custom_leaderboard": {
+    "title": "Classificação deste jogo",
+    "by": "Criado por {name}",
+    "guess_between": "10 perguntas adivinhando entre {fonts}",
+    "play_this_game": "Jogar este jogo",
+    "view": "Ver a classificação deste jogo",
+    "empty": "Ainda não há pontuações. Seja o primeiro a marcar um tempo!",
+    "error": "Falha ao carregar a classificação deste jogo."
+  },
   "countdown": {
     "label": "{difficulty}",
     "sub": "Prepare-se…",
@@ -82,6 +108,7 @@
   "leaderboard": {
     "title": "Classificação",
     "back": "← Voltar",
+    "back_to_menu": "← Voltar ao menu",
     "loading": "Carregando…",
     "empty": "Ainda não há pontuações perfeitas. Seja o primeiro!",
     "error": "Falha ao carregar a classificação."

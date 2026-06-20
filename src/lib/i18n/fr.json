@@ -38,6 +38,32 @@
     "play_again": "Rejouer (mêmes polices)",
     "change_fonts": "Choisir d'autres polices"
   },
+  "custom_share": {
+    "creator_name_label": "Ton nom (pour le classement)",
+    "creator_name_placeholder": "Ton nom (facultatif)",
+    "create_and_play": "Créer une partie à partager",
+    "creating": "Création…",
+    "practice_solo": "Ou juste t'entraîner en solo",
+    "create_error": "Impossible de créer la partie. Réessaie.",
+    "copy_link": "Copier le lien de partage",
+    "not_found_title": "Partie introuvable",
+    "not_found_body": "Ce lien de partie personnalisée est invalide ou a expiré. Pourquoi ne pas créer la tienne ?",
+    "landing_title": "Tu as été défié !",
+    "page_title": "Essaie ce jeu de devinettes de polices entre {fonts}",
+    "create_your_own": "Crée ta propre partie",
+    "exit": "Quitter la partie",
+    "enter_name": "Ajoute ton nom au classement de cette partie",
+    "challenge_from": "{name} t'a défié sur cette partie"
+  },
+  "custom_leaderboard": {
+    "title": "Classement de cette partie",
+    "by": "Créée par {name}",
+    "guess_between": "10 questions pour distinguer {fonts}",
+    "play_this_game": "Jouer cette partie",
+    "view": "Voir le classement de cette partie",
+    "empty": "Pas encore de score. Sois le premier à marquer un temps !",
+    "error": "Impossible de charger le classement de cette partie."
+  },
   "countdown": {
     "label": "{difficulty}",
     "sub": "Prépare-toi…",
@@ -82,6 +108,7 @@
   "leaderboard": {
     "title": "Classement",
     "back": "← Retour",
+    "back_to_menu": "← Retour au menu",
     "loading": "Chargement…",
     "empty": "Pas encore de score parfait. Sois le premier !",
     "error": "Impossible de charger le classement."

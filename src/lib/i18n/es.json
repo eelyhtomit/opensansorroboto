@@ -38,6 +38,32 @@
     "play_again": "Jugar otra vez (mismas fuentes)",
     "change_fonts": "Elegir otras fuentes"
   },
+  "custom_share": {
+    "creator_name_label": "Tu nombre (para la clasificación)",
+    "creator_name_placeholder": "Tu nombre (opcional)",
+    "create_and_play": "Crear juego para compartir",
+    "creating": "Creando…",
+    "practice_solo": "O solo practicar en solitario",
+    "create_error": "No se pudo crear el juego. Inténtalo de nuevo.",
+    "copy_link": "Copiar enlace para compartir",
+    "not_found_title": "Juego no encontrado",
+    "not_found_body": "Este enlace de juego personalizado no es válido o ha caducado. ¿Por qué no creas el tuyo?",
+    "landing_title": "¡Te han retado!",
+    "page_title": "Prueba este juego de adivinar tipografías entre {fonts}",
+    "create_your_own": "Crea tu propio juego",
+    "exit": "Salir del juego",
+    "enter_name": "Añade tu nombre a la clasificación de este juego",
+    "challenge_from": "{name} te retó a este juego"
+  },
+  "custom_leaderboard": {
+    "title": "Clasificación de este juego",
+    "by": "Creado por {name}",
+    "guess_between": "10 preguntas adivinando entre {fonts}",
+    "play_this_game": "Jugar este juego",
+    "view": "Ver la clasificación de este juego",
+    "empty": "Aún no hay puntuaciones. ¡Sé el primero en marcar un tiempo!",
+    "error": "Error al cargar la clasificación de este juego."
+  },
   "countdown": {
     "label": "{difficulty}",
     "sub": "Prepárate…",
@@ -82,6 +108,7 @@
   "leaderboard": {
     "title": "Clasificación",
     "back": "← Volver",
+    "back_to_menu": "← Volver al menú",
     "loading": "Cargando…",
     "empty": "Aún no hay puntuaciones perfectas. ¡Sé el primero!",
     "error": "Error al cargar la clasificación."

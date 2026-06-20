@@ -38,6 +38,32 @@
     "play_again": "もう一度（同じフォント）",
     "change_fonts": "別のフォントを選ぶ"
   },
+  "custom_share": {
+    "creator_name_label": "あなたの名前（ランキング用）",
+    "creator_name_placeholder": "お名前（任意）",
+    "create_and_play": "共有できるゲームを作る",
+    "creating": "作成中…",
+    "practice_solo": "一人で練習する",
+    "create_error": "ゲームを作成できませんでした。もう一度お試しください。",
+    "copy_link": "共有リンクをコピー",
+    "not_found_title": "ゲームが見つかりません",
+    "not_found_body": "このカスタムゲームのリンクは無効か、期限切れです。自分だけのゲームを作ってみませんか？",
+    "landing_title": "挑戦状が届いた！",
+    "page_title": "{fonts}を見分けるフォント当てゲームに挑戦",
+    "create_your_own": "自分だけのゲームを作る",
+    "exit": "ゲームを終了",
+    "enter_name": "このゲームのランキングに名前を追加",
+    "challenge_from": "{name} さんからの挑戦状です"
+  },
+  "custom_leaderboard": {
+    "title": "このゲームのランキング",
+    "by": "作成者：{name}",
+    "guess_between": "全10問・{fonts}を見分けよう",
+    "play_this_game": "このゲームをプレイ",
+    "view": "このゲームのランキングを見る",
+    "empty": "まだスコアがありません。最初の記録を作ろう！",
+    "error": "このゲームのランキングを読み込めませんでした。"
+  },
   "countdown": {
     "label": "{difficulty}",
     "sub": "準備して…",
@@ -82,6 +108,7 @@
   "leaderboard": {
     "title": "ランキング",
     "back": "← 戻る",
+    "back_to_menu": "← メニューに戻る",
     "loading": "読み込み中…",
     "empty": "まだ完璧なスコアはありません。最初の挑戦者になろう！",
     "error": "ランキングの読み込みに失敗しました。"
