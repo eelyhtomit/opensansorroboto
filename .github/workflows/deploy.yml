@@ -1,9 +1,10 @@
 name: Deploy
 
+# Deployment is handled by Netlify. This workflow no longer runs automatically
+# on push to main; it can still be triggered manually from the Actions tab if
+# needed (e.g. to push Supabase DB migrations).
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   deploy:
