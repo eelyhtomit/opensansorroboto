@@ -215,7 +215,7 @@
 
 					{#if isMe}
 						<div class="share">
-							<span class="share-label">{$t('share.title')}</span>
+							<span class="share-label">{$t('custom_share.share_title')}</span>
 							<div class="share-buttons">
 								<button
 									class="share-btn facebook"

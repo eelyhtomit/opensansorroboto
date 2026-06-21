@@ -33,6 +33,11 @@
 	let startError = $state('');
 	let starting = $state(false);
 
+	// True when this visitor created the game (arrived with `?created=1`). They
+	// skip the "challenged" landing on entry, and if they back out of their run
+	// they return to a neutral landing rather than the challenge-recipient one.
+	let wasCreator = $state(false);
+
 	// Resolve stored font names → FontConfig objects (canonical from FONTS).
 	function resolveFonts(names: string[]): FontConfig[] {
 		return names
@@ -73,18 +78,34 @@
 	}
 
 	onMount(() => {
-		// Show a landing page first (settings + leaderboard). Hydrate the store
-		// so the per-token leaderboard can render, but DON'T auto-start — the
-		// player taps "Play this game" to begin.
-		if (data.game) {
-			game.hydrateCustomGame(
-				resolveFonts(data.game.fonts),
-				data.game.token,
-				data.game.creatorName
-			);
-		} else {
+		if (!data.game) {
 			game.reset();
+			return;
 		}
+
+		// The creator arrives from game creation with `?created=1`. They skip the
+		// "You've been challenged!" landing and drop straight into the countdown.
+		// Recipients (no flag) see the landing first and tap "Play this game".
+		const isCreator =
+			typeof window !== 'undefined' &&
+			new URLSearchParams(window.location.search).get('created') === '1';
+
+		if (isCreator) {
+			wasCreator = true;
+			// Strip the flag so a later refresh shows the normal landing page
+			// rather than auto-starting a brand-new run.
+			history.replaceState(history.state, '', window.location.pathname);
+			startGame();
+			return;
+		}
+
+		// Recipient view: hydrate so the per-token leaderboard can render, but
+		// DON'T auto-start — the player taps "Play this game" to begin.
+		game.hydrateCustomGame(
+			resolveFonts(data.game.fonts),
+			data.game.token,
+			data.game.creatorName
+		);
 	});
 
 	// True before any run has started — i.e. the landing page should be shown.
@@ -99,6 +120,26 @@
 	// leaderboard. Switching is local UI state; the game phases take over once a
 	// run actually starts.
 	let preGameView = $state<'landing' | 'leaderboard'>('landing');
+
+	// Landing heading: the creator sees a neutral "play this game" title; everyone
+	// who arrived via the shared link sees the "you've been challenged" framing.
+	const landingTitle = $derived(
+		wasCreator ? $t('custom_share.landing_title_creator') : $t('custom_share.landing_title')
+	);
+
+	// Return to THIS game's landing page (without leaving the route) by resetting
+	// the store to its pre-game, hydrated state. Used when the creator bails out
+	// of the countdown/run so they land on the neutral landing, not the menu.
+	function backToLanding() {
+		preGameView = 'landing';
+		if (data.game) {
+			game.hydrateCustomGame(
+				resolveFonts(data.game.fonts),
+				data.game.token,
+				data.game.creatorName
+			);
+		}
+	}
 
 	// Leave to the main menu with a clean store so the home route doesn't reopen
 	// on a stale phase (e.g. leaderboard) carried over from this game.
@@ -129,7 +170,7 @@
 		{:else if onLanding}
 			<div class="landing">
 				<div class="landing-header">
-					<h1 class="landing-title">{$t('custom_share.landing_title')}</h1>
+					<h1 class="landing-title">{landingTitle}</h1>
 					{#if data.game.creatorName}
 						<p class="landing-creator">
 							{$t('custom_leaderboard.by', { values: { name: data.game.creatorName } })}
@@ -168,7 +209,11 @@
 					<Timer />
 					<span class="progress">{$game.currentIndex + 1} / {$game.questions.length}</span>
 				</div>
-				<button class="back-link" onclick={backToMenu}>{$t('custom_share.exit')}</button>
+				<!-- The creator backs out to this game's (neutral) landing; recipients
+				     exit straight to the main menu. -->
+				<button class="back-link" onclick={wasCreator ? backToLanding : backToMenu}>
+					{$t('custom_share.exit')}
+				</button>
 			</div>
 
 		{:else if $game.phase === 'result'}

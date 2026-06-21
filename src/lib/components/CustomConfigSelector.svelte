@@ -89,7 +89,9 @@
 			if (!res.ok) throw new Error('server error');
 			const data = await res.json();
 			if (!data.token) throw new Error('server error');
-			await goto(`/play/${data.token}`);
+			// `created=1` marks the creator's own first visit so /play auto-starts
+			// the game (countdown) instead of showing the "challenged" landing.
+			await goto(`/play/${data.token}?created=1`);
 		} catch (e: unknown) {
 			errorMsg = e instanceof Error && e.message !== 'server error'
 				? e.message

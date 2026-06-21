@@ -33,6 +33,9 @@
 	let sharedSubmitting = $state(false);
 	let sharedSubmitError = $state('');
 	let sharedCopied = $state(false);
+	// True once the player's perfect shared-game score has been saved, so the
+	// unsaved-score guard knows their leaderboard spot is secured.
+	let sharedSubmitted = $state(false);
 
 	function shareUrl(): string {
 		const token = $game.shareToken;
@@ -81,6 +84,7 @@
 			const data = await res.json();
 			localStorage.setItem('osrr_name', name.trim());
 			if (email.trim()) localStorage.setItem('osrr_email', email.trim());
+			sharedSubmitted = true;
 			// Jump to this game's leaderboard with the player's row highlighted.
 			game.goToLeaderboardHighlighting(name.trim(), data.id ?? null);
 		} catch {
@@ -92,8 +96,15 @@
 
 	// ---- Leave-confirmation guard -------------------------------------------
 	// True when the player aced the run but hasn't saved their name yet, so
-	// leaving would forfeit their leaderboard spot.
-	const unsavedPerfect = $derived($isPerfect && !isCustom && !submitted && !notOnBoard);
+	// leaving would forfeit their leaderboard spot. Covers both preset
+	// difficulties and shared custom games (each has its own leaderboard);
+	// local-only custom practice has no leaderboard and is exempt.
+	const unsavedPerfect = $derived(
+		$isPerfect &&
+			(isShared
+				? !sharedSubmitted
+				: !isCustom && !submitted && !notOnBoard)
+	);
 
 	let leaveDialog = $state<HTMLDialogElement | null>(null);
 	// The navigation to run if the player confirms they want to leave.
@@ -265,16 +276,16 @@
 		{/if}
 
 		<div class="result-actions">
-			<button class="action-btn primary" onclick={tryAgain} disabled={replaying}>
+			<button class="action-btn primary" onclick={() => guardedLeave(tryAgain)} disabled={replaying}>
 				{replaying ? $t('custom.starting') : $t('custom.play_again')}
 			</button>
-			<button class="action-btn" onclick={() => game.goTo('leaderboard')}>
+			<button class="action-btn" onclick={() => guardedLeave(() => game.goTo('leaderboard'))}>
 				{$t('custom_leaderboard.view')}
 			</button>
 			<button class="action-btn" onclick={copyShareLink}>
 				{sharedCopied ? $t('share.copied') : $t('custom_share.copy_link')}
 			</button>
-			<button class="action-btn" onclick={createYourOwn}>{$t('custom_share.create_your_own')}</button>
+			<button class="action-btn" onclick={() => guardedLeave(createYourOwn)}>{$t('custom_share.create_your_own')}</button>
 		</div>
 	{:else if isCustom}
 		<p class="time-label">{formatTime($game.timerMs)}</p>
