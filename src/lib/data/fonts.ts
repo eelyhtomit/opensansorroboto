@@ -12,10 +12,10 @@ export const FONTS: FontConfig[] = [
 	{ name: 'Montserrat', family: "'Montserrat', sans-serif" },
 	{ name: 'Poppins', family: "'Poppins', sans-serif" },
 	{ name: 'Inter', family: "'Inter', sans-serif" },
-	{ name: 'Verdana', family: "Verdana, sans-serif" },
-	{ name: 'Source Sans Pro', family: "'Source Sans Pro', sans-serif" },
-	{ name: 'Arial', family: "Arial, sans-serif" },
-	{ name: 'Helvetica', family: "Helvetica, Arial, sans-serif" }
+	{ name: 'Verdana', family: "'Verdana', sans-serif" },
+	{ name: 'Source Sans Pro', family: "'Source Sans 3', sans-serif" },
+	{ name: 'Arial', family: "'Arial', sans-serif" },
+	{ name: 'Helvetica', family: "'Helvetica', sans-serif" }
 ];
 
 // Fonts excluding Open Sans and Roboto (used as random display fonts for medium/hard)
